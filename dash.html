@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>ConcreteHub — Order Concrete Online</title>
+<title>Maricopa Concrete & Allied Company — Order Online</title>
 <style>
   :root{
     --bg:#f5f6f8;
@@ -11,8 +11,8 @@
     --text:#0f172a;
     --muted:#64748b;
     --border:#e2e8f0;
-    --primary:#f97316;
-    --primary-2:#fb923c;
+    --primary:#c2410c;          /* Maricopa brand: deep terracotta */
+    --primary-2:#f97316;
     --primary-soft:#fff4ec;
     --success:#10b981;
     --danger:#ef4444;
@@ -44,19 +44,18 @@
   header{
     position:sticky;top:0;z-index:50;
     background:var(--card);border-bottom:1px solid var(--border);
-    backdrop-filter:blur(10px);
   }
   .header-inner{
-    max-width:1200px;margin:0 auto;padding:12px 18px;
+    max-width:1240px;margin:0 auto;padding:12px 18px;
     display:flex;align-items:center;gap:14px;
   }
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:17px}
   .logo{
-    width:38px;height:38px;border-radius:11px;
+    width:42px;height:42px;border-radius:11px;
     background:linear-gradient(135deg,var(--primary),var(--primary-2));
-    display:grid;place-items:center;font-size:19px;
+    display:grid;place-items:center;font-size:20px;flex-shrink:0;
   }
-  .brand small{display:block;font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:.3px}
+  .brand small{display:block;font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:.3px;margin-top:1px}
   .header-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
   .icon-btn{
     width:40px;height:40px;border-radius:10px;
@@ -72,22 +71,20 @@
   }
 
   /* ================= HERO ================= */
-  .hero{
-    max-width:1200px;margin:20px auto 0;padding:0 18px;
-  }
+  .hero{max-width:1240px;margin:20px auto 0;padding:0 18px}
   .hero-box{
     background:
-      radial-gradient(circle at 15% 20%, rgba(249,115,22,.14), transparent 45%),
-      radial-gradient(circle at 85% 80%, rgba(14,165,233,.12), transparent 45%),
+      radial-gradient(circle at 15% 20%, rgba(194,65,12,.14), transparent 45%),
+      radial-gradient(circle at 85% 80%, rgba(14,165,233,.10), transparent 45%),
       var(--card);
     border:1px solid var(--border);border-radius:22px;
-    padding:28px 26px;box-shadow:var(--shadow);
-    display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    padding:30px 28px;box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:22px;flex-wrap:wrap;
   }
-  .hero-box h1{font-size:24px;line-height:1.2;letter-spacing:-.5px}
+  .hero-box h1{font-size:25px;line-height:1.2;letter-spacing:-.6px}
   .hero-box h1 span{color:var(--primary)}
-  .hero-box p{color:var(--muted);font-size:13.5px;margin-top:8px;max-width:520px;line-height:1.5}
-  .hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .hero-box p{color:var(--muted);font-size:13.5px;margin-top:9px;max-width:560px;line-height:1.55}
+  .hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
   .hb{
     font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:20px;
     background:var(--primary-soft);color:var(--primary);
@@ -97,54 +94,68 @@
   .hb.b3{background:rgba(16,185,129,.1);color:var(--success)}
   .hero-side{
     margin-left:auto;text-align:center;background:var(--bg);
-    padding:16px 20px;border-radius:14px;border:1px solid var(--border);
+    padding:16px 22px;border-radius:14px;border:1px solid var(--border);
   }
   .hero-side .num{font-size:26px;font-weight:800;color:var(--primary)}
   .hero-side small{font-size:11.5px;color:var(--muted);font-weight:600}
 
-  /* ================= SECTION ================= */
-  .wrap{max-width:1200px;margin:0 auto;padding:24px 18px 60px}
+  /* ================= WRAP ================= */
+  .wrap{max-width:1240px;margin:0 auto;padding:26px 18px 70px}
+
+  /* category tabs */
+  .cat-tabs{
+    display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;
+    scrollbar-width:none;margin-bottom:6px;
+  }
+  .cat-tabs::-webkit-scrollbar{display:none}
+  .cat-tab{
+    flex-shrink:0;padding:9px 16px;border-radius:11px;font-size:13px;font-weight:600;
+    background:var(--card);border:1px solid var(--border);color:var(--muted);
+    display:inline-flex;align-items:center;gap:6px;transition:.2s;white-space:nowrap;
+  }
+  .cat-tab:hover{border-color:var(--primary);color:var(--primary)}
+  .cat-tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+
   .section-head{
     display:flex;align-items:center;justify-content:space-between;
-    gap:12px;flex-wrap:wrap;margin-bottom:16px;
+    gap:12px;flex-wrap:wrap;margin:8px 0 16px;
   }
   .section-head h2{font-size:19px;letter-spacing:-.3px}
   .section-head p{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .filters{display:flex;gap:6px;flex-wrap:wrap;background:var(--card);padding:4px;border-radius:11px;border:1px solid var(--border)}
-  .f-chip{padding:7px 13px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--muted);transition:.2s}
-  .f-chip.active{background:var(--primary);color:#fff}
+  .result-count{font-size:12.5px;color:var(--muted);font-weight:600}
 
   /* ================= PRODUCT GRID ================= */
   .products{
     display:grid;gap:16px;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
   }
   .p-card{
     background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
     overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
-    transition:transform .22s, border-color .22s;
+    transition:transform .22s, border-color .22s;cursor:pointer;
   }
   .p-card:hover{transform:translateY(-3px);border-color:var(--primary)}
   .p-thumb{
-    height:118px;display:grid;place-items:center;font-size:44px;
+    height:120px;display:grid;place-items:center;font-size:46px;
     position:relative;
   }
-  .p-grade{
+  .p-cat-pill{
     position:absolute;top:10px;left:10px;
-    background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:800;
-    padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);letter-spacing:.4px;
+    background:rgba(0,0,0,.55);color:#fff;font-size:10.5px;font-weight:800;
+    padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);letter-spacing:.3px;
+    text-transform:uppercase;
   }
   .p-body{padding:14px 15px 16px;display:flex;flex-direction:column;flex:1}
-  .p-body h3{font-size:15px;letter-spacing:-.2px}
-  .p-body .desc{font-size:12px;color:var(--muted);line-height:1.45;margin-top:5px;flex:1}
+  .p-body h3{font-size:14.5px;letter-spacing:-.2px;line-height:1.3}
+  .p-body .desc{font-size:12px;color:var(--muted);line-height:1.45;margin-top:6px;flex:1}
   .p-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .tag{font-size:10.5px;font-weight:600;padding:4px 9px;border-radius:6px;background:var(--bg);color:var(--muted);border:1px solid var(--border)}
   .p-foot{
     display:flex;align-items:center;justify-content:space-between;
     margin-top:13px;padding-top:12px;border-top:1px solid var(--border);gap:8px;
   }
-  .price{font-size:16px;font-weight:800}
-  .price small{font-size:11px;font-weight:600;color:var(--muted)}
+  .price{font-size:15.5px;font-weight:800;line-height:1.2}
+  .price small{font-size:10.5px;font-weight:600;color:var(--muted);display:block;margin-top:2px}
   .btn{
     padding:9px 15px;border-radius:10px;font-size:13px;font-weight:700;
     display:inline-flex;align-items:center;gap:6px;transition:.2s;
@@ -159,6 +170,10 @@
   .btn-block{width:100%;justify-content:center}
   .btn:disabled{opacity:.5;cursor:not-allowed;filter:none}
 
+  /* empty state */
+  .empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted)}
+  .empty .e-ico{font-size:48px;margin-bottom:12px;opacity:.5}
+
   /* ================= MODAL ================= */
   .modal-bg{
     position:fixed;inset:0;background:rgba(2,6,23,.6);
@@ -167,7 +182,7 @@
   }
   .modal-bg.show{display:grid;place-items:center;animation:fade .2s}
   .modal{
-    background:var(--card);border-radius:18px;width:100%;max-width:520px;
+    background:var(--card);border-radius:18px;width:100%;max-width:540px;
     box-shadow:0 30px 70px rgba(0,0,0,.35);
     animation:pop .25s ease;overflow:hidden;
     margin:auto;
@@ -179,27 +194,27 @@
   .modal-head h3{font-size:16px;letter-spacing:-.2px}
   .modal-head .close{
     width:32px;height:32px;border-radius:8px;display:grid;place-items:center;
-    font-size:18px;color:var(--muted);transition:.2s;
+    font-size:18px;color:var(--muted);transition:.2s;flex-shrink:0;
   }
   .modal-head .close:hover{background:var(--bg);color:var(--danger)}
-  .modal-body{padding:18px 20px}
+  .modal-body{padding:18px 20px;max-height:70vh;overflow-y:auto}
   .modal-foot{
     padding:14px 20px 18px;border-top:1px solid var(--border);
     display:flex;gap:10px;
   }
   .modal-foot .btn{flex:1;justify-content:center}
 
-  /* product summary in quantity modal */
+  /* product summary */
   .prod-summary{
     display:flex;gap:13px;background:var(--bg);
     padding:13px;border-radius:12px;margin-bottom:16px;align-items:center;
   }
   .prod-summary .ps-ico{
-    width:52px;height:52px;border-radius:12px;display:grid;place-items:center;
-    font-size:24px;flex-shrink:0;
+    width:54px;height:54px;border-radius:12px;display:grid;place-items:center;
+    font-size:26px;flex-shrink:0;
   }
   .prod-summary h4{font-size:14.5px;letter-spacing:-.2px}
-  .prod-summary small{font-size:12px;color:var(--muted);display:block;margin-top:2px}
+  .prod-summary small{font-size:12px;color:var(--muted);display:block;margin-top:3px;line-height:1.4}
 
   .field{margin-bottom:14px}
   .field label{display:block;font-size:12.5px;font-weight:700;margin-bottom:6px}
@@ -209,8 +224,19 @@
     border:1px solid var(--border);background:var(--bg);color:var(--text);
     font-size:14px;outline:none;transition:.2s;
   }
-  .field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(249,115,22,.14)}
-  .field .hint{font-size:11px;color:var(--muted);margin-top:5px}
+  .field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(194,65,12,.14)}
+  .field .hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4}
+
+  /* size option cards */
+  .sizes{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+  .size-opt{
+    padding:11px 12px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg);cursor:pointer;transition:.2s;text-align:left;
+  }
+  .size-opt:hover{border-color:var(--primary)}
+  .size-opt.checked{border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 2px rgba(194,65,12,.15)}
+  .size-opt strong{font-size:12.5px;display:block;letter-spacing:-.1px}
+  .size-opt small{font-size:11px;color:var(--muted);display:block;margin-top:2px}
 
   /* quantity stepper */
   .qty-row{display:flex;align-items:center;gap:10px}
@@ -228,7 +254,7 @@
   }
   .quick-qty button:hover{border-color:var(--primary);color:var(--primary)}
 
-  /* toggles for add-ons */
+  /* add-ons */
   .opt{
     display:flex;align-items:center;gap:11px;padding:11px 13px;
     border-radius:11px;border:1px solid var(--border);background:var(--bg);
@@ -247,24 +273,26 @@
   .opt .o-body small{font-size:11px;color:var(--muted)}
   .opt .o-price{font-size:12.5px;font-weight:700;white-space:nowrap;color:var(--primary)}
 
-  /* live cost breakdown */
+  /* live calculation */
   .calc-box{
     background:var(--bg);border-radius:12px;padding:14px;margin-top:6px;
     border:1px dashed var(--border);
   }
-  .calc-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--muted)}
-  .calc-row span:last-child{font-weight:600;color:var(--text)}
+  .calc-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--muted);gap:10px}
+  .calc-row span:last-child{font-weight:600;color:var(--text);text-align:right}
   .calc-row.total{
     border-top:1px solid var(--border);margin-top:8px;padding-top:10px;
     font-size:15px;font-weight:800;color:var(--text);
   }
-  .calc-row.total span:last-child{color:var(--primary);font-size:17px}
+  .calc-row.total span:last-child{color:var(--primary);font-size:18px}
   .live-tag{
     font-size:10.5px;font-weight:700;color:var(--success);
     display:inline-flex;align-items:center;gap:4px;
   }
   .live-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--success);animation:blink 1.4s infinite}
   @keyframes blink{50%{opacity:.3}}
+  .discount-row{color:var(--success)!important}
+  .discount-row span:last-child{color:var(--success)!important}
 
   /* ============ M-PESA ============ */
   .mpesa-head{
@@ -276,10 +304,8 @@
     display:grid;place-items:center;font-size:22px;font-weight:900;
   }
   .mpesa-head h3{font-size:16px;color:#fff}
-  .mpesa-head small{font-size:11.5px;opacity:.85;display:block;margin-top:2px}
-  .mpesa-amount{
-    text-align:center;padding:18px 0 6px;
-  }
+  .mpesa-head small{font-size:11.5px;opacity:.88;display:block;margin-top:2px}
+  .mpesa-amount{text-align:center;padding:18px 0 6px}
   .mpesa-amount small{font-size:11.5px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px}
   .mpesa-amount .big{font-size:30px;font-weight:800;letter-spacing:-1px;margin-top:4px}
   .phone-wrap{position:relative}
@@ -291,12 +317,10 @@
   .phone-wrap input{padding-left:78px!important}
   .mpesa-info{
     background:rgba(14,165,233,.08);border-radius:10px;padding:11px 13px;
-    font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px;
+    font-size:12px;color:var(--muted);line-height:1.55;margin-top:6px;
   }
   .mpesa-info b{color:var(--accent)}
-  .processing{
-    text-align:center;padding:26px 0;
-  }
+  .processing{text-align:center;padding:28px 0}
   .spinner{
     width:46px;height:46px;border:4px solid var(--border);border-top-color:var(--primary);
     border-radius:50%;margin:0 auto 16px;animation:spin .8s linear infinite;
@@ -313,13 +337,13 @@
     animation:pop .35s;
   }
   .success h3{font-size:18px;margin-bottom:6px}
-  .success p{font-size:13px;color:var(--muted);line-height:1.5;max-width:340px;margin:0 auto}
+  .success p{font-size:13px;color:var(--muted);line-height:1.55;max-width:350px;margin:0 auto}
   .receipt{
     background:var(--bg);border-radius:12px;padding:14px;margin-top:18px;
     text-align:left;font-size:12.5px;
   }
-  .receipt .r-row{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted)}
-  .receipt .r-row b{color:var(--text);font-weight:700}
+  .receipt .r-row{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted);gap:10px}
+  .receipt .r-row b{color:var(--text);font-weight:700;text-align:right}
   .receipt .r-row.t{border-top:1px solid var(--border);margin-top:6px;padding-top:9px;font-size:14px}
   .receipt .r-row.t b{color:var(--primary)}
 
@@ -327,7 +351,7 @@
   .drawer-bg{position:fixed;inset:0;background:rgba(2,6,23,.55);z-index:150;display:none;backdrop-filter:blur(2px)}
   .drawer-bg.show{display:block;animation:fade .2s}
   .drawer{
-    position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100%;
+    position:fixed;top:0;right:0;bottom:0;width:410px;max-width:100%;
     background:var(--card);z-index:160;transform:translateX(100%);
     transition:transform .3s ease;display:flex;flex-direction:column;
   }
@@ -339,23 +363,21 @@
   .drawer-head h3{font-size:16px}
   .drawer-body{flex:1;overflow-y:auto;padding:14px 18px}
   .drawer-foot{padding:16px 18px;border-top:1px solid var(--border)}
-  .cart-item{
-    display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--border);
-  }
+  .cart-item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--border)}
   .cart-item:last-child{border-bottom:none}
   .ci-ico{
-    width:44px;height:44px;border-radius:10px;display:grid;place-items:center;
-    font-size:20px;flex-shrink:0;background:var(--primary-soft);
+    width:46px;height:46px;border-radius:10px;display:grid;place-items:center;
+    font-size:22px;flex-shrink:0;
   }
   .ci-body{flex:1;min-width:0}
-  .ci-body strong{font-size:13.5px;display:block}
+  .ci-body strong{font-size:13.5px;display:block;line-height:1.3}
   .ci-body small{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
   .ci-right{text-align:right;font-size:13px;font-weight:700;white-space:nowrap}
   .ci-remove{font-size:11px;color:var(--danger);font-weight:600;margin-top:4px;display:inline-block}
-  .cart-total-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px}
-  .cart-total-row b{font-size:17px;color:var(--primary)}
-  .empty-cart{text-align:center;padding:40px 10px;color:var(--muted);font-size:13px}
-  .empty-cart .e-ico{font-size:44px;margin-bottom:10px;opacity:.5}
+  .cart-total-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px;gap:10px}
+  .cart-total-row b{font-size:17px;color:var(--primary);white-space:nowrap}
+  .empty-cart{text-align:center;padding:44px 10px;color:var(--muted);font-size:13px;line-height:1.6}
+  .empty-cart .e-ico{font-size:46px;margin-bottom:12px;opacity:.5}
 
   /* ============ TOAST ============ */
   .toast{
@@ -370,30 +392,39 @@
   @keyframes fade{from{opacity:0}to{opacity:1}}
   @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
 
+  /* footer */
+  footer{
+    text-align:center;padding:24px 18px;color:var(--muted);font-size:12px;
+    border-top:1px solid var(--border);margin-top:20px;
+  }
+  footer strong{color:var(--text)}
+
   /* ============ RESPONSIVE ============ */
   @media(max-width:640px){
     .header-inner{padding:10px 14px}
-    .brand{font-size:16px}
+    .brand{font-size:15px}
     .brand small{display:none}
     .hero-box{padding:20px 18px}
     .hero-box h1{font-size:20px}
     .hero-side{display:none}
     .wrap{padding:18px 14px 50px}
-    .products{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-    .p-thumb{height:90px;font-size:34px}
+    .products{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+    .p-thumb{height:92px;font-size:36px}
     .p-body{padding:11px 12px 13px}
-    .p-body h3{font-size:13.5px}
+    .p-body h3{font-size:13px}
     .p-body .desc{font-size:11px}
     .p-foot{flex-direction:column;align-items:stretch;gap:8px}
     .p-foot .btn{justify-content:center}
     .modal{max-width:100%}
-    .modal-body{padding:15px 16px}
+    .modal-body{padding:15px 16px;max-height:68vh}
+    .modal-foot{padding:12px 16px 15px}
     .drawer{width:100%}
     .mpesa-amount .big{font-size:26px}
+    .sizes{grid-template-columns:repeat(2,1fr)}
   }
-  @media(max-width:380px){
+  @media(max-width:400px){
     .products{grid-template-columns:1fr}
-    .p-thumb{height:110px;font-size:40px}
+    .p-thumb{height:110px;font-size:42px}
   }
 </style>
 </head>
@@ -404,7 +435,7 @@
   <div class="header-inner">
     <div class="brand">
       <div class="logo">🏗️</div>
-      <div>ConcreteHub<small>Order concrete online · Delivered fresh</small></div>
+      <div>Maricopa Concrete<small>& Allied Company · Order online</small></div>
     </div>
     <div class="header-actions">
       <button class="icon-btn" id="themeBtn" title="Toggle theme">🌙</button>
@@ -419,40 +450,37 @@
 <div class="hero">
   <div class="hero-box">
     <div>
-      <h1>Fresh concrete, <span>delivered to your site</span></h1>
-      <p>Choose your mix, set the quantity, and pay via M-Pesa. We batch and dispatch to your location — no site visit, no paperwork.</p>
+      <h1>Premium precast concrete, <span>delivered to your site</span></h1>
+      <p>Browse our full range of kerbs, blocks, pavers, culverts and finishing products. Choose your size and quantity, see the price instantly, and pay securely with M-Pesa.</p>
       <div class="hero-badges">
-        <span class="hb">✅ Ready-mix plant</span>
-        <span class="hb b2">🚚 Same-day delivery</span>
+        <span class="hb">✅ Locally manufactured</span>
+        <span class="hb b2">🚚 Fast delivery</span>
         <span class="hb b3">📱 Pay via M-Pesa</span>
       </div>
     </div>
     <div class="hero-side">
-      <div class="num">M20–M40</div>
-      <small>5 mix grades available</small>
+      <div class="num" id="heroProductCount">15+</div>
+      <small>Products available</small>
     </div>
   </div>
 </div>
 
-<!-- ================= PRODUCTS ================= -->
+<!-- ================= STORE ================= -->
 <div class="wrap">
+  <div class="cat-tabs" id="catTabs"></div>
+
   <div class="section-head">
     <div>
-      <h2>Available Concrete Mixes</h2>
-      <p>Tap a mix to enter your quantity and see the price instantly</p>
+      <h2 id="catTitle">All Products</h2>
+      <p id="catDesc">Tap any product to select size and quantity</p>
     </div>
-    <div class="filters" id="filters">
-      <button class="f-chip active" data-cat="all">All</button>
-      <button class="f-chip" data-cat="foundation">Foundation</button>
-      <button class="f-chip" data-cat="slab">Slab</button>
-      <button class="f-chip" data-cat="structural">Structural</button>
-      <button class="f-chip" data-cat="special">Special</button>
-    </div>
+    <div class="result-count" id="resultCount"></div>
   </div>
+
   <div class="products" id="productGrid"></div>
 </div>
 
-<!-- ================= QUANTITY MODAL ================= -->
+<!-- ================= QUANTITY / CONFIGURE MODAL ================= -->
 <div class="modal-bg" id="qtyModalBg">
   <div class="modal">
     <div class="modal-head">
@@ -463,26 +491,25 @@
       <div class="prod-summary">
         <div class="ps-ico" id="qsIcon">🧱</div>
         <div>
-          <h4 id="qsName">Concrete Mix</h4>
+          <h4 id="qsName">Product</h4>
           <small id="qsDesc">Description</small>
         </div>
       </div>
 
+      <div class="field" id="sizeField">
+        <label>Select Size</label>
+        <div class="sizes" id="sizeOptions"></div>
+      </div>
+
       <div class="field">
-        <label>Quantity <span>(in cubic metres — m³)</span></label>
+        <label>Quantity <span id="qtyUnitHint">(pieces)</span></label>
         <div class="qty-row">
           <button class="step" data-q="-1">−</button>
           <input type="number" id="qtyInput" min="1" value="1" />
           <button class="step" data-q="1">+</button>
         </div>
-        <div class="quick-qty">
-          <button data-qq="5">5 m³</button>
-          <button data-qq="10">10 m³</button>
-          <button data-qq="15">15 m³</button>
-          <button data-qq="20">20 m³</button>
-          <button data-qq="30">30 m³</button>
-        </div>
-        <div class="hint">Minimum order is 1 m³. Most trucks carry 6–8 m³ per trip.</div>
+        <div class="quick-qty" id="quickQty"></div>
+        <div class="hint" id="qtyHint">Minimum order applies. Bulk discounts available.</div>
       </div>
 
       <div class="field">
@@ -491,46 +518,29 @@
       </div>
 
       <div class="field">
-        <label>Add-ons <span>(optional)</span></label>
-        <div class="opt" data-addon="pump" data-price="4500">
-          <div class="chk">✓</div>
-          <div class="o-body"><strong>Concrete pump service</strong><small>Required for high-rise / hard-to-reach pours</small></div>
-          <div class="o-price">+KSh 4,500</div>
-        </div>
-        <div class="opt" data-addon="fiber" data-price="1200">
-          <div class="chk">✓</div>
-          <div class="o-body"><strong>Fiber reinforcement</strong><small>Reduces cracking — per m³</small></div>
-          <div class="o-price">+KSh 1,200/m³</div>
-        </div>
-        <div class="opt" data-addon="retarder" data-price="800">
-          <div class="chk">✓</div>
-          <div class="o-body"><strong>Set retarder</strong><small>Extends working time in hot weather — per m³</small></div>
-          <div class="o-price">+KSh 800/m³</div>
-        </div>
+        <label>Delivery Location</label>
+        <select id="deliveryZone"></select>
       </div>
 
       <div class="calc-box">
-        <div class="calc-row"><span>Mix price <span id="calcRate">—</span></span><span id="calcBase">—</span></div>
-        <div class="calc-row" id="pumpRow" style="display:none"><span>Pump service</span><span id="calcPump">—</span></div>
-        <div class="calc-row" id="fiberRow" style="display:none"><span>Fiber reinforcement</span><span id="calcFiber">—</span></div>
-        <div class="calc-row" id="retRow" style="display:none"><span>Set retarder</span><span id="calcRet">—</span></div>
-        <div class="calc-row"><span>Delivery fee</span><span id="calcDelivery">KSh 3,000</span></div>
+        <div class="calc-row"><span>Unit price</span><span id="calcRate">—</span></div>
+        <div class="calc-row"><span>Subtotal</span><span id="calcBase">—</span></div>
+        <div class="calc-row discount-row" id="discRow" style="display:none"><span>Bulk discount</span><span id="calcDisc">—</span></div>
+        <div class="calc-row"><span>Delivery fee</span><span id="calcDelivery">—</span></div>
         <div class="calc-row"><span>VAT (16%)</span><span id="calcVat">—</span></div>
         <div class="calc-row total"><span>Total <span class="live-tag">live</span></span><span id="calcTotal">—</span></div>
       </div>
     </div>
     <div class="modal-foot">
       <button class="btn" data-close="qtyModalBg">Cancel</button>
-      <button class="btn btn-primary" id="proceedBtn">Proceed to Pay →</button>
+      <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
     </div>
   </div>
 </div>
 
 <!-- ================= M-PESA MODAL ================= -->
 <div class="modal-bg" id="mpesaModalBg">
-  <div class="modal" id="mpesaModalCard" style="max-width:440px">
-    <!-- filled by JS -->
-  </div>
+  <div class="modal" id="mpesaModalCard" style="max-width:440px"></div>
 </div>
 
 <!-- ================= CART DRAWER ================= -->
@@ -547,60 +557,235 @@
 <!-- ================= TOAST ================= -->
 <div class="toast" id="toast"></div>
 
+<footer>
+  © 2025 <strong>Maricopa Concrete &amp; Allied Company</strong> · All rights reserved · Nairobi, Kenya
+</footer>
+
 <script>
 /* =========================================================
-   DATA
+   DEFAULT CATALOG
+   (Will be OVERRIDDEN by anything the Admin Panel saves
+    into localStorage under key "maricopa_products")
 ========================================================= */
-const PRODUCTS = [
-  { id:'m20', grade:'M20', name:'M20 Standard Mix', cat:'foundation',
-    price:11000, icon:'🧱', color:'#f97316',
-    desc:'General-purpose mix for foundations, footings and mass concrete.',
-    tags:['20 N/mm²','7-day cure','Foundation'],
-    strength:'20 N/mm²', use:'Footings & blinding' },
+const DEFAULT_PRODUCTS = [
+  /* ---------- ROAD & DRAINAGE ---------- */
+  { id:'road-kerbs', name:'Road Kerbs (Channel)', cat:'road', icon:'🛣️', color:'#c2410c',
+    desc:'Precast concrete road kerbs with integrated channel profile. Standard 1m lengths.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'1 m straight', mult:1},
+      {label:'1 m radius', mult:1.15},
+      {label:'1 m transition', mult:1.2},
+    ], basePrice:1850, minQty:10 },
 
-  { id:'m25', grade:'M25', name:'M25 All-Round Mix', cat:'slab',
-    price:12500, icon:'🧱', color:'#0ea5e9',
-    desc:'Most popular mix for slabs, driveways and general building works.',
-    tags:['25 N/mm²','Popular','Slabs'],
-    strength:'25 N/mm²', use:'Slabs & driveways' },
+  { id:'road-channels', name:'Road Channels', cat:'road', icon:'🧱', color:'#ea580c',
+    desc:'Precast U/V-shaped gutter channels for roadside drainage. 1m sections.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'300 mm width', mult:1},
+      {label:'450 mm width', mult:1.3},
+      {label:'600 mm width', mult:1.65},
+    ], basePrice:2100, minQty:10 },
 
-  { id:'m30', grade:'M30', name:'M30 Structural Mix', cat:'structural',
-    price:14000, icon:'🧱', color:'#10b981',
-    desc:'High-strength concrete for beams, columns and load-bearing structures.',
-    tags:['30 N/mm²','Structural','Beams'],
-    strength:'30 N/mm²', use:'Beams & columns' },
+  { id:'shallow-drains', name:'Shallow Drains', cat:'road', icon:'💧', color:'#0891b2',
+    desc:'Low-profile precast drainage channels for driveways, yards and light drainage.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'1 m · 200mm', mult:1},
+      {label:'1 m · 300mm', mult:1.25},
+    ], basePrice:1600, minQty:10 },
 
-  { id:'m35', grade:'M35', name:'M35 Heavy-Duty Mix', cat:'structural',
-    price:15800, icon:'🧱', color:'#8b5cf6',
-    desc:'For heavy-load structural elements, retaining walls and high-stress floors.',
-    tags:['35 N/mm²','Heavy load','Walls'],
-    strength:'35 N/mm²', use:'Retaining walls' },
+  { id:'culverts', name:'Culverts', cat:'road', icon:'⚪', color:'#0e7490',
+    desc:'Precast concrete culvert pipes for stormwater under roads and driveways.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'300 mm dia · 1m', mult:1},
+      {label:'450 mm dia · 1m', mult:1.4},
+      {label:'600 mm dia · 1m', mult:1.85},
+      {label:'900 mm dia · 1m', mult:2.6},
+    ], basePrice:4200, minQty:5 },
 
-  { id:'m40', grade:'M40', name:'M40 Premium Mix', cat:'special',
-    price:18200, icon:'🧱', color:'#ec4899',
-    desc:'Premium-grade concrete for industrial floors and specialised structures.',
-    tags:['40 N/mm²','Industrial','Premium'],
-    strength:'40 N/mm²', use:'Industrial floors' },
+  /* ---------- BLOCKS ---------- */
+  { id:'solid-blocks', name:'Solid Blocks', cat:'blocks', icon:'🧱', color:'#7c2d12',
+    desc:'Dense solid concrete blocks — load-bearing walls and foundations. High strength.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'6 inch', mult:1},
+      {label:'8 inch', mult:1.3},
+      {label:'9 inch', mult:1.45},
+    ], basePrice:65, minQty:50 },
 
-  { id:'m25w', grade:'M25 WP', name:'M25 Waterproof Mix', cat:'special',
-    price:14500, icon:'💧', color:'#0891b2',
-    desc:'Water-resistant mix for basements, tanks and wet environments.',
-    tags:['Waterproof','Basements','Tanks'],
-    strength:'25 N/mm²', use:'Wet areas' },
+  { id:'hollow-blocks', name:'Hollow Blocks', cat:'blocks', icon:'🟫', color:'#92400e',
+    desc:'Lightweight hollow concrete blocks — walls and partitions. Good insulation.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'6 inch', mult:1},
+      {label:'8 inch', mult:1.25},
+      {label:'9 inch', mult:1.4},
+    ], basePrice:55, minQty:50 },
+
+  /* ---------- PAVING ---------- */
+  { id:'paving-slabs', name:'Paving Slabs', cat:'paving', icon:'⬜', color:'#475569',
+    desc:'Flat precast paving slabs for footpaths, driveways and patios. Smooth finish.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'300×300 mm', mult:1},
+      {label:'400×400 mm', mult:1.6},
+      {label:'600×600 mm', mult:2.4},
+    ], basePrice:180, minQty:20 },
+
+  { id:'ordinary-cabros', name:'Ordinary Cabros', cat:'paving', icon:'🔲', color:'#334155',
+    desc:'Standard interlocking paving blocks — driveways, parking and roads.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'60 mm thick', mult:1},
+      {label:'80 mm thick', mult:1.25},
+    ], basePrice:75, minQty:100 },
+
+  { id:'special-cabros', name:'Special Cabros', cat:'paving', icon:'🔳', color:'#1e293b',
+    desc:'Special-shape or coloured interlocking pavers for decorative paving patterns.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'Decorative · 60mm', mult:1},
+      {label:'Decorative · 80mm', mult:1.3},
+      {label:'Coloured · 60mm', mult:1.2},
+    ], basePrice:95, minQty:100 },
+
+  /* ---------- GARDEN & LANDSCAPING ---------- */
+  { id:'garden-kerbs', name:'Garden Kerbs', cat:'garden', icon:'🌿', color:'#15803d',
+    desc:'Decorative garden edging kerbs — beds, paths and landscaping borders.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'Straight · 1m', mult:1},
+      {label:'Curved · 1m', mult:1.2},
+    ], basePrice:850, minQty:20 },
+
+  { id:'fencing-posts', name:'Fencing Posts', cat:'garden', icon:'🏡', color:'#166534',
+    desc:'Reinforced precast concrete fencing posts — boundary fences and chain-link support.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'6 ft', mult:1},
+      {label:'8 ft', mult:1.3},
+      {label:'9 ft', mult:1.45},
+    ], basePrice:950, minQty:10 },
+
+  /* ---------- ARCHITECTURAL & FINISHING ---------- */
+  { id:'pillar-coping', name:'Pillar Coping', cat:'arch', icon:'🏛️', color:'#7c3aed',
+    desc:'Capping stones for pillars and columns — protective and decorative.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'Standard 15"', mult:1},
+      {label:'Large 18"', mult:1.3},
+    ], basePrice:1200, minQty:10 },
+
+  { id:'wall-coping', name:'Wall Coping', cat:'arch', icon:'🧱', color:'#6d28d9',
+    desc:'Capping stones for boundary and retaining walls. Flat, angled or rounded.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'Flat · 1m', mult:1},
+      {label:'Angled · 1m', mult:1.15},
+      {label:'Rounded · 1m', mult:1.2},
+    ], basePrice:1100, minQty:10 },
+
+  { id:'window-seals', name:'Window Seals (Sills)', cat:'arch', icon:'🪟', color:'#9333ea',
+    desc:'Precast window sills — water runoff and architectural finish under windows.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'0.9 m', mult:1},
+      {label:'1.2 m', mult:1.25},
+      {label:'1.5 m', mult:1.5},
+    ], basePrice:650, minQty:10 },
+
+  { id:'mouldings', name:'Mouldings', cat:'arch', icon:'🎨', color:'#a21caf',
+    desc:'Decorative precast concrete mouldings — cornices, bands and architectural trims.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[
+      {label:'Small · 1m', mult:1},
+      {label:'Medium · 1m', mult:1.3},
+      {label:'Large · 1m', mult:1.6},
+    ], basePrice:900, minQty:10 },
 ];
 
-const DELIVERY_FEE = 3000;
+/* =========================================================
+   CATEGORIES
+========================================================= */
+const CATEGORIES = [
+  {id:'all',    label:'All Products',        icon:'🏗️', desc:'Tap any product to select size and quantity'},
+  {id:'road',   label:'Road & Drainage',     icon:'🛣️', desc:'Kerbs, channels, drains and culverts'},
+  {id:'blocks', label:'Blocks',              icon:'🧱', desc:'Solid and hollow masonry blocks'},
+  {id:'paving', label:'Paving',              icon:'🔲', desc:'Slabs, ordinary cabros and special cabros'},
+  {id:'garden', label:'Garden & Landscaping',icon:'🌿', desc:'Garden kerbs and fencing posts'},
+  {id:'arch',   label:'Architectural',       icon:'🏛️', desc:'Coping, window seals and mouldings'},
+];
+
+/* =========================================================
+   DELIVERY ZONES (can also be overridden by admin later)
+========================================================= */
+const DEFAULT_DELIVERY_ZONES = [
+  {id:'nairobi',    label:'Nairobi & environs', fee:2500},
+  {id:'kiambu',     label:'Kiambu / Thika',     fee:3500},
+  {id:'machakos',   label:'Machakos / Kajiado', fee:4500},
+  {id:'nakuru',     label:'Nakuru',             fee:7500},
+  {id:'mombasa',    label:'Mombasa',            fee:12000},
+  {id:'pickup',     label:'Customer pickup',    fee:0},
+];
+
+/* =========================================================
+   BULK DISCOUNT TIERS
+========================================================= */
+const DEFAULT_DISCOUNTS = [
+  {min:1,   pct:0},
+  {min:100, pct:5},
+  {min:500, pct:10},
+  {min:1000,pct:15},
+];
+
 const VAT_RATE = 0.16;
-const MPESA_PAYBILL = '4002200'; // sample paybill
-const MPESA_ACCOUNT = 'CONCRETEHUB';
+const MPESA_ACCOUNT = 'MARICOPA';
+const STORAGE_KEY = 'maricopa_products';
+const STORAGE_SETTINGS = 'maricopa_settings';
+
+/* =========================================================
+   LOAD DATA — prefer localStorage (from admin), fallback to defaults
+========================================================= */
+function loadProducts(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return DEFAULT_PRODUCTS.slice();
+    const parsed = JSON.parse(raw);
+    if(Array.isArray(parsed) && parsed.length) return parsed;
+    return DEFAULT_PRODUCTS.slice();
+  }catch(e){ return DEFAULT_PRODUCTS.slice(); }
+}
+function loadSettings(){
+  let out = {
+    deliveryZones: DEFAULT_DELIVERY_ZONES.slice(),
+    discounts: DEFAULT_DISCOUNTS.slice(),
+    vat: VAT_RATE,
+  };
+  try{
+    const raw = localStorage.getItem(STORAGE_SETTINGS);
+    if(raw){
+      const s = JSON.parse(raw);
+      if(s.deliveryZones?.length) out.deliveryZones = s.deliveryZones;
+      if(s.discounts?.length) out.discounts = s.discounts;
+      if(typeof s.vat === 'number') out.vat = s.vat;
+    }
+  }catch(e){}
+  return out;
+}
+
+let PRODUCTS = loadProducts();
+let SETTINGS = loadSettings();
 
 /* =========================================================
    STATE
 ========================================================= */
 let state = {
   activeCat: 'all',
-  current: null,          // { product, qty, addons:{pump,fiber,retarder}, date }
-  cart: [],
+  current: null,   // { product, sizeIndex, qty, date, zoneId }
+  cart: [],        // [{ productId, sizeIndex, qty, date, zoneId, snap:{...} }]
+  pending: null,   // order being paid
   paymentRef: null,
 };
 
@@ -608,8 +793,8 @@ let state = {
    HELPERS
 ========================================================= */
 const $ = id => document.getElementById(id);
-const fmt = n => 'KSh ' + Math.round(n).toLocaleString();
 const html = document.documentElement;
+const fmt = n => 'KSh ' + Math.round(n).toLocaleString();
 
 function toast(msg){
   const t = $('toast');
@@ -617,6 +802,41 @@ function toast(msg){
   t.classList.add('show');
   clearTimeout(t._t);
   t._t = setTimeout(()=>t.classList.remove('show'), 2600);
+}
+
+function getProductById(id){ return PRODUCTS.find(p=>p.id===id); }
+function getZoneById(id){ return SETTINGS.deliveryZones.find(z=>z.id===id); }
+function getDiscountForQty(qty){
+  let pct = 0;
+  SETTINGS.discounts.forEach(d=>{ if(qty >= d.min) pct = d.pct; });
+  return pct;
+}
+function unitPrice(product, sizeIndex){
+  const sz = product.sizes[sizeIndex] || product.sizes[0];
+  return Math.round(product.basePrice * sz.mult);
+}
+
+/* full calculation from a config object */
+function calculate(cfg){
+  const p = getProductById(cfg.productId);
+  if(!p) return null;
+  const sizeIndex = cfg.sizeIndex || 0;
+  const qty = Math.max(1, cfg.qty || 1);
+  const unit = unitPrice(p, sizeIndex);
+  const subtotal = unit * qty;
+  const discPct = getDiscountForQty(qty);
+  const discount = Math.round(subtotal * discPct / 100);
+  const afterDiscount = subtotal - discount;
+  const zone = getZoneById(cfg.zoneId) || SETTINGS.deliveryZones[0];
+  const delivery = zone ? zone.fee : 0;
+  const vatBase = afterDiscount + delivery;
+  const vat = Math.round(vatBase * SETTINGS.vat);
+  const total = afterDiscount + delivery + vat;
+  return {
+    p, size: p.sizes[sizeIndex], qty, unit, subtotal,
+    discPct, discount, afterDiscount,
+    zone, delivery, vat, total,
+  };
 }
 
 /* =========================================================
@@ -629,164 +849,288 @@ $('themeBtn').onclick = () => {
 };
 
 /* =========================================================
-   RENDER PRODUCTS
+   RENDER CATEGORY TABS
 ========================================================= */
-function renderProducts(){
-  const list = PRODUCTS.filter(p => state.activeCat==='all' || p.cat===state.activeCat);
-  $('productGrid').innerHTML = list.map(p=>`
-    <div class="p-card" data-id="${p.id}">
-      <div class="p-thumb" style="background:${p.color}18">
-        <span class="p-grade" style="background:${p.color}">${p.grade}</span>
-        <span style="filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))">${p.icon}</span>
-      </div>
-      <div class="p-body">
-        <h3>${p.name}</h3>
-        <p class="desc">${p.desc}</p>
-        <div class="p-meta">
-          ${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
-        </div>
-        <div class="p-foot">
-          <div class="price">${fmt(p.price)}<br><small>per m³</small></div>
-          <button class="btn btn-primary" data-select="${p.id}">Order →</button>
-        </div>
-      </div>
-    </div>
+function renderCatTabs(){
+  $('catTabs').innerHTML = CATEGORIES.map(c=>`
+    <button class="cat-tab ${state.activeCat===c.id?'active':''}" data-cat="${c.id}">
+      <span>${c.icon}</span> ${c.label}
+    </button>
   `).join('');
-
-  document.querySelectorAll('[data-select]').forEach(b=>{
-    b.onclick = (e) => { e.stopPropagation(); openQty(b.dataset.select); };
-  });
-  document.querySelectorAll('.p-card').forEach(c=>{
-    c.onclick = () => openQty(c.dataset.id);
+  document.querySelectorAll('.cat-tab').forEach(b=>{
+    b.onclick = () => {
+      state.activeCat = b.dataset.cat;
+      renderCatTabs();
+      renderProducts();
+    };
   });
 }
 
-/* filters */
-document.querySelectorAll('#filters .f-chip').forEach(c=>{
-  c.onclick = () => {
-    document.querySelectorAll('#filters .f-chip').forEach(x=>x.classList.remove('active'));
-    c.classList.add('active');
-    state.activeCat = c.dataset.cat;
-    renderProducts();
-  };
-});
+/* =========================================================
+   RENDER PRODUCTS
+========================================================= */
+function renderProducts(){
+  const cat = CATEGORIES.find(c=>c.id===state.activeCat) || CATEGORIES[0];
+  $('catTitle').textContent = cat.label;
+  $('catDesc').textContent = cat.desc;
+
+  const list = PRODUCTS.filter(p => state.activeCat==='all' || p.cat===state.activeCat);
+  $('resultCount').textContent = list.length + ' product' + (list.length===1?'':'s');
+  $('heroProductCount').textContent = PRODUCTS.length + '+';
+
+  if(list.length===0){
+    $('productGrid').innerHTML = `<div class="empty"><div class="e-ico">📦</div>No products in this category yet.</div>`;
+    return;
+  }
+
+  $('productGrid').innerHTML = list.map(p=>{
+    const minPrice = Math.round(p.basePrice * (p.sizes[0]?.mult || 1));
+    return `
+      <div class="p-card" data-id="${p.id}">
+        <div class="p-thumb" style="background:${p.color}18">
+          <span class="p-cat-pill" style="background:${p.color}">${p.unitLabel}</span>
+          <span style="filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))">${p.icon}</span>
+        </div>
+        <div class="p-body">
+          <h3>${p.name}</h3>
+          <p class="desc">${p.desc}</p>
+          <div class="p-meta">
+            ${p.sizes.slice(0,3).map(s=>`<span class="tag">${s.label}</span>`).join('')}
+          </div>
+          <div class="p-foot">
+            <div class="price">${fmt(minPrice)}<small>${p.unitLabel}</small></div>
+            <button class="btn btn-primary" data-select="${p.id}">Order →</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  document.querySelectorAll('[data-select]').forEach(b=>{
+    b.onclick = (e) => { e.stopPropagation(); openConfigure(b.dataset.select); };
+  });
+  document.querySelectorAll('.p-card').forEach(c=>{
+    c.onclick = () => openConfigure(c.dataset.id);
+  });
+}
 
 /* =========================================================
-   OPEN QUANTITY MODAL
+   OPEN CONFIGURE MODAL
 ========================================================= */
-function openQty(id){
-  const p = PRODUCTS.find(x=>x.id===id);
+function openConfigure(id){
+  const p = getProductById(id);
   if(!p) return;
+
+  // default delivery date = tomorrow
+  const tomorrow = new Date(Date.now()+86400000).toISOString().slice(0,10);
+
   state.current = {
-    product: p, qty: 1,
-    addons: { pump:false, fiber:false, retarder:false },
-    date: new Date(Date.now()+86400000).toISOString().slice(0,10),
+    productId: id,
+    sizeIndex: 0,
+    qty: p.minQty || 1,
+    date: tomorrow,
+    zoneId: SETTINGS.deliveryZones[0]?.id || 'nairobi',
   };
+
+  // summary
   $('qsIcon').textContent = p.icon;
   $('qsIcon').style.background = p.color + '22';
   $('qsName').textContent = p.name;
-  $('qsDesc').textContent = `${p.strength} · ${p.use} · ${fmt(p.price)}/m³`;
-  $('qtyInput').value = 1;
+  $('qsDesc').textContent = p.desc;
+  $('qtyUnitHint').textContent = `(${p.unit === 'm2' ? 'm²' : p.unitLabel.replace('per ','')})`;
+  $('qtyHint').textContent = `Minimum order: ${p.minQty} ${p.unit === 'piece' ? 'pieces' : ''}. Bulk discounts auto-applied.`;
+
+  // sizes
+  $('sizeOptions').innerHTML = p.sizes.map((s,i)=>`
+    <div class="size-opt ${i===0?'checked':''}" data-si="${i}">
+      <strong>${s.label}</strong>
+      <small>${fmt(Math.round(p.basePrice * s.mult))}</small>
+    </div>
+  `).join('');
+  document.querySelectorAll('.size-opt').forEach(o=>{
+    o.onclick = () => {
+      document.querySelectorAll('.size-opt').forEach(x=>x.classList.remove('checked'));
+      o.classList.add('checked');
+      state.current.sizeIndex = +o.dataset.si;
+      recalc();
+    };
+  });
+
+  // quick qty buttons — smart per product
+  const quickVals = [p.minQty, p.minQty*5, p.minQty*10, p.minQty*20].filter(v=>v>0);
+  $('quickQty').innerHTML = quickVals.map(v=>`<button data-qq="${v}">${v}</button>`).join('');
+  document.querySelectorAll('#quickQty button').forEach(b=>{
+    b.onclick = () => {
+      $('qtyInput').value = b.dataset.qq;
+      state.current.qty = +b.dataset.qq;
+      recalc();
+    };
+  });
+
+  // qty input
+  $('qtyInput').value = state.current.qty;
+  $('qtyInput').oninput = () => {
+    let v = Math.max(1, +$('qtyInput').value || 1);
+    state.current.qty = v;
+    recalc();
+  };
+  $('qtyInput').onblur = () => { $('qtyInput').value = state.current.qty; };
+
+  // delivery zones
+  $('deliveryZone').innerHTML = SETTINGS.deliveryZones.map(z=>
+    `<option value="${z.id}">${z.label} — ${z.fee===0 ? 'Free / pickup' : fmt(z.fee)}</option>`
+  ).join('');
+  $('deliveryZone').value = state.current.zoneId;
+  $('deliveryZone').onchange = () => {
+    state.current.zoneId = $('deliveryZone').value;
+    recalc();
+  };
+
+  // date
   $('deliveryDate').value = state.current.date;
-  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('checked'));
+  $('deliveryDate').onchange = () => { state.current.date = $('deliveryDate').value; };
+
   $('qtyModalBg').classList.add('show');
   recalc();
 }
 
-/* close buttons */
-document.querySelectorAll('[data-close]').forEach(b=>{
-  b.onclick = () => $(b.dataset.close).classList.remove('show');
-});
-document.querySelectorAll('.modal-bg').forEach(m=>{
-  m.onclick = (e) => { if(e.target===m) m.classList.remove('show'); };
-});
-
-/* qty steppers */
+/* steppers */
 document.querySelectorAll('.step').forEach(b=>{
   b.onclick = () => {
     const inp = $('qtyInput');
-    let v = (+inp.value || 1) + (+b.dataset.q);
+    const p = state.current?.productId ? getProductById(state.current.productId) : null;
+    const min = p?.minQty || 1;
+    let v = (+inp.value || min) + (+b.dataset.q) * Math.max(1, Math.round(min/10) || 1);
     if(v < 1) v = 1;
-    if(v > 200) v = 200;
+    if(v > 100000) v = 100000;
     inp.value = v;
     state.current.qty = v;
     recalc();
   };
 });
-$('qtyInput').oninput = () => {
-  let v = Math.max(1, Math.min(200, +$('qtyInput').value || 1));
-  state.current.qty = v;
-  recalc();
-};
-$('qtyInput').onblur = () => { $('qtyInput').value = state.current.qty; };
-document.querySelectorAll('[data-qq]').forEach(b=>{
-  b.onclick = () => {
-    $('qtyInput').value = b.dataset.qq;
-    state.current.qty = +b.dataset.qq;
-    recalc();
-  };
-});
-$('deliveryDate').onchange = () => { state.current.date = $('deliveryDate').value; };
-
-/* addons */
-document.querySelectorAll('.opt').forEach(o=>{
-  o.onclick = () => {
-    o.classList.toggle('checked');
-    state.current.addons[o.dataset.addon] = o.classList.contains('checked');
-    recalc();
-  };
-});
 
 /* =========================================================
-   LIVE CALCULATION
+   LIVE RECALC
 ========================================================= */
-function calc(){
-  const c = state.current;
-  if(!c) return null;
-  const p = c.product;
-  const qty = c.qty;
-  const base = p.price * qty;
-  const pump = c.addons.pump ? 4500 : 0;
-  const fiber = c.addons.fiber ? 1200 * qty : 0;
-  const retarder = c.addons.retarder ? 800 * qty : 0;
-  const subtotal = base + pump + fiber + retarder + DELIVERY_FEE;
-  const vat = subtotal * VAT_RATE;
-  const total = subtotal + vat;
-  return { base, pump, fiber, retarder, delivery: DELIVERY_FEE, subtotal, vat, total, qty, p };
-}
-
 function recalc(){
-  const r = calc();
+  const cfg = state.current;
+  if(!cfg) return;
+  const r = calculate(cfg);
   if(!r) return;
-  $('calcRate').textContent = `(${fmt(r.p.price)} × ${r.qty})`;
-  $('calcBase').textContent = fmt(r.base);
-  $('calcPump').textContent = fmt(r.pump);
-  $('calcFiber').textContent = fmt(r.fiber);
-  $('calcRet').textContent = fmt(r.retarder);
-  $('pumpRow').style.display = r.pump ? 'flex' : 'none';
-  $('fiberRow').style.display = r.fiber ? 'flex' : 'none';
-  $('retRow').style.display = r.retarder ? 'flex' : 'none';
-  $('calcDelivery').textContent = fmt(r.delivery);
+  $('calcRate').textContent = `${fmt(r.unit)} × ${r.qty}`;
+  $('calcBase').textContent = fmt(r.subtotal);
+  if(r.discPct > 0){
+    $('discRow').style.display = 'flex';
+    $('calcDisc').textContent = `− ${fmt(r.discount)} (${r.discPct}%)`;
+  }else{
+    $('discRow').style.display = 'none';
+  }
+  $('calcDelivery').textContent = r.delivery === 0 ? 'Free (pickup)' : fmt(r.delivery);
   $('calcVat').textContent = fmt(r.vat);
   $('calcTotal').textContent = fmt(r.total);
 }
 
 /* =========================================================
-   PROCEED TO PAY → OPEN M-PESA
+   ADD TO CART
 ========================================================= */
-$('proceedBtn').onclick = () => {
-  const r = calc();
-  if(!r){ toast('Something went wrong'); return; }
-  if(!state.current.date){ toast('Please pick a delivery date'); return; }
+$('addToCartBtn').onclick = () => {
+  const cfg = state.current;
+  if(!cfg){ toast('Something went wrong'); return; }
+  const p = getProductById(cfg.productId);
+  if(cfg.qty < (p.minQty || 1)){
+    toast(`Minimum order is ${p.minQty} ${p.unit==='piece'?'pieces':''}`);
+    return;
+  }
+  if(!cfg.date){ toast('Please pick a delivery date'); return; }
+
+  const r = calculate(cfg);
+  state.cart.push({ ...cfg, snap: r });
+  updateCartUI();
   $('qtyModalBg').classList.remove('show');
-  openMpesa(r);
+  toast(`${p.name} × ${cfg.qty} added to cart`);
 };
+
+/* =========================================================
+   CART
+========================================================= */
+function updateCartUI(){
+  $('cartCount').textContent = state.cart.length;
+
+  if(state.cart.length===0){
+    $('drawerBody').innerHTML = `
+      <div class="empty-cart">
+        <div class="e-ico">🛒</div>
+        Your cart is empty.<br>Tap a product to start your order.
+      </div>`;
+    $('drawerFoot').innerHTML = '';
+    return;
+  }
+
+  $('drawerBody').innerHTML = state.cart.map((it,i)=>{
+    const r = it.snap;
+    return `
+      <div class="cart-item">
+        <div class="ci-ico" style="background:${r.p.color}22;color:${r.p.color}">${r.p.icon}</div>
+        <div class="ci-body">
+          <strong>${r.p.name}</strong>
+          <small>${r.size.label} · ${r.qty} ${r.p.unit==='piece'?'pcs':''}</small>
+          <small>Delivery: ${it.date} · ${r.zone.label}</small>
+          <a class="ci-remove" data-rm="${i}">Remove</a>
+        </div>
+        <div class="ci-right">${fmt(r.total)}</div>
+      </div>`;
+  }).join('');
+
+  const grand = state.cart.reduce((s,it)=> s + it.snap.total, 0);
+  $('drawerFoot').innerHTML = `
+    <div class="cart-total-row"><span>Total (incl. VAT & delivery)</span><b>${fmt(grand)}</b></div>
+    <button class="btn btn-primary btn-block" id="checkoutBtn" style="margin-top:10px">
+      Checkout with M-Pesa →
+    </button>
+  `;
+  document.querySelectorAll('[data-rm]').forEach(a=>{
+    a.onclick = () => {
+      state.cart.splice(+a.dataset.rm,1);
+      updateCartUI();
+      toast('Item removed');
+    };
+  });
+  $('checkoutBtn').onclick = startCheckout;
+}
+
+/* drawer toggle */
+$('cartBtn').onclick = () => {
+  $('drawer').classList.add('open');
+  $('drawerBg').classList.add('show');
+};
+$('closeDrawer').onclick = () => {
+  $('drawer').classList.remove('open');
+  $('drawerBg').classList.remove('show');
+};
+$('drawerBg').onclick = () => {
+  $('drawer').classList.remove('open');
+  $('drawerBg').classList.remove('show');
+};
+
+/* =========================================================
+   CHECKOUT — combine cart to single total & open M-Pesa
+========================================================= */
+function startCheckout(){
+  if(state.cart.length===0){ toast('Cart is empty'); return; }
+  const grand = state.cart.reduce((s,it)=> s + it.snap.total, 0);
+  state.pending = {
+    items: state.cart.slice(),
+    total: grand,
+  };
+  $('drawer').classList.remove('open');
+  $('drawerBg').classList.remove('show');
+  openMpesa(state.pending);
+}
 
 /* =========================================================
    M-PESA MODAL
 ========================================================= */
-function openMpesa(r){
-  state.pendingOrder = r;
+function openMpesa(order){
   $('mpesaModalCard').innerHTML = `
     <div class="mpesa-head">
       <div class="m-logo">M</div>
@@ -798,7 +1142,7 @@ function openMpesa(r){
     <div class="modal-body">
       <div class="mpesa-amount">
         <small>Amount to pay</small>
-        <div class="big">${fmt(r.total)}</div>
+        <div class="big">${fmt(order.total)}</div>
       </div>
       <div class="field">
         <label>M-Pesa Phone Number <span>(Safaricom)</span></label>
@@ -809,7 +1153,7 @@ function openMpesa(r){
         <div class="hint">Enter the number registered on M-Pesa. You'll get an STK push prompt.</div>
       </div>
       <div class="mpesa-info">
-        💡 You will receive a popup on your phone from <b>M-PESA</b>. Enter your PIN to confirm. The amount is <b>${fmt(r.total)}</b> to <b>${MPESA_ACCOUNT}</b>.
+        💡 You will receive a popup on your phone from <b>M-PESA</b>. Enter your PIN to confirm payment of <b>${fmt(order.total)}</b> to <b>${MPESA_ACCOUNT}</b>.
       </div>
     </div>
     <div class="modal-foot">
@@ -829,9 +1173,8 @@ function openMpesa(r){
 function processPayment(){
   const phone = ($('mpesaPhone').value || '').replace(/\D/g,'');
   if(phone.length < 9){ toast('Enter a valid M-Pesa phone number'); return; }
-  const r = state.pendingOrder;
+  const order = state.pending;
 
-  // Processing screen
   $('mpesaModalCard').innerHTML = `
     <div class="modal-body">
       <div class="processing">
@@ -843,35 +1186,44 @@ function processPayment(){
   `;
 
   setTimeout(() => {
-    // Simulate success
     state.paymentRef = 'MPE' + Date.now().toString().slice(-8);
-    showSuccess(r, phone);
+    showSuccess(order, phone);
     state.cart = [];
+    state.pending = null;
     updateCartUI();
   }, 2600);
 }
 
 /* =========================================================
-   SUCCESS SCREEN
+   SUCCESS
 ========================================================= */
-function showSuccess(r, phone){
-  const orderId = 'ORD-' + Math.floor(100000 + Math.random()*900000);
+function showSuccess(order, phone){
+  const orderId = 'MAR-' + Math.floor(100000 + Math.random()*900000);
+  const firstItem = order.items[0];
+  const firstDate = firstItem ? firstItem.date : new Date().toISOString().slice(0,10);
+
+  const itemsHtml = order.items.map(it=>{
+    const r = it.snap;
+    return `
+      <div class="r-row">
+        <span>${r.p.name} · ${r.size.label}</span>
+        <b>${r.qty} × ${fmt(r.unit)}</b>
+      </div>`;
+  }).join('');
+
   $('mpesaModalCard').innerHTML = `
     <div class="modal-body">
       <div class="success">
         <div class="s-ico">✅</div>
         <h3>Payment successful!</h3>
-        <p>Your order has been confirmed. We'll batch and dispatch to your site on <b>${state.current.date}</b>.</p>
+        <p>Your order has been confirmed. We'll prepare and deliver on <b>${firstDate}</b>.</p>
         <div class="receipt">
           <div class="r-row"><span>Order ID</span><b>${orderId}</b></div>
-          <div class="r-row"><span>Mix</span><b>${r.p.grade} · ${r.qty} m³</b></div>
-          ${r.pump?`<div class="r-row"><span>Add-on</span><b>Pump service</b></div>`:''}
-          ${r.fiber?`<div class="r-row"><span>Add-on</span><b>Fiber reinforcement</b></div>`:''}
-          ${r.retarder?`<div class="r-row"><span>Add-on</span><b>Set retarder</b></div>`:''}
-          <div class="r-row"><span>Delivery date</span><b>${state.current.date}</b></div>
+          ${itemsHtml}
+          <div class="r-row"><span>Delivery date</span><b>${firstDate}</b></div>
           <div class="r-row"><span>Paid via</span><b>M-Pesa +254 ${phone}</b></div>
-          <div class="r-row"><span>M-Pesa Ref</span><b>${state.paymentRef}</b></div>
-          <div class="r-row t"><span>Total paid</span><b>${fmt(r.total)}</b></div>
+          <div class="r-row"><span>M-Pesa ref</span><b>${state.paymentRef}</b></div>
+          <div class="r-row t"><span>Total paid</span><b>${fmt(order.total)}</b></div>
         </div>
         <div style="margin-top:18px">
           <button class="btn btn-primary btn-block" id="doneBtn">Done</button>
@@ -881,106 +1233,43 @@ function showSuccess(r, phone){
   `;
   $('doneBtn').onclick = () => {
     $('mpesaModalBg').classList.remove('show');
-    state.current = null;
-    state.pendingOrder = null;
-    toast('Order placed successfully! 🎉');
+    toast('Order placed successfully 🎉');
   };
 }
 
 /* =========================================================
-   CART
+   CLOSE MODALS
 ========================================================= */
-function updateCartUI(){
-  $('cartCount').textContent = state.cart.length;
-  if(state.cart.length===0){
-    $('drawerBody').innerHTML = `
-      <div class="empty-cart">
-        <div class="e-ico">🛒</div>
-        Your cart is empty.<br>Click a concrete mix to start your order.
-      </div>`;
-    $('drawerFoot').innerHTML = '';
-    return;
+document.querySelectorAll('[data-close]').forEach(b=>{
+  b.onclick = () => $(b.dataset.close).classList.remove('show');
+});
+document.querySelectorAll('.modal-bg').forEach(m=>{
+  m.onclick = (e) => { if(e.target===m) m.classList.remove('show'); };
+});
+
+/* =========================================================
+   LIVE-UPDATE LISTENER
+   If admin changes products in another tab, refresh catalog.
+========================================================= */
+window.addEventListener('storage', (e)=>{
+  if(e.key === STORAGE_KEY){
+    PRODUCTS = loadProducts();
+    renderCatTabs();
+    renderProducts();
+    toast('Catalog updated');
   }
-  $('drawerBody').innerHTML = state.cart.map((it,i)=>{
-    const r = it.calc;
-    const addons = [
-      r.pump?'Pump':'', r.fiber?'Fiber':'', r.retarder?'Retarder':''
-    ].filter(Boolean).join(' · ');
-    return `
-      <div class="cart-item">
-        <div class="ci-ico" style="background:${r.p.color}22;color:${r.p.color}">${r.p.icon}</div>
-        <div class="ci-body">
-          <strong>${r.p.grade} · ${r.qty} m³</strong>
-          <small>${r.p.name}${addons?' · '+addons:''}</small>
-          <small>Delivery: ${state.current?.date || '—'}</small>
-          <a class="ci-remove" data-rm="${i}">Remove</a>
-        </div>
-        <div class="ci-right">${fmt(r.total)}</div>
-      </div>`;
-  }).join('');
-
-  const total = state.cart.reduce((s,it)=> s + it.calc.total, 0);
-  $('drawerFoot').innerHTML = `
-    <div class="cart-total-row"><span>Total (incl. VAT & delivery)</span><b>${fmt(total)}</b></div>
-    <button class="btn btn-primary btn-block" id="checkoutBtn" style="margin-top:10px">
-      Checkout with M-Pesa →
-    </button>
-  `;
-
-  document.querySelectorAll('[data-rm]').forEach(a=>{
-    a.onclick = () => {
-      state.cart.splice(+a.dataset.rm,1);
-      updateCartUI();
-      toast('Item removed');
-    };
-  });
-  $('checkoutBtn').onclick = () => {
-    if(state.cart.length===0){ toast('Cart is empty'); return; }
-    // use the first cart item as the order for simplicity
-    const r = state.cart[0].calc;
-    $('drawer').classList.remove('open');
-    $('drawerBg').classList.remove('show');
-    openMpesa(r);
-  };
-}
-
-/* cart drawer toggle */
-$('cartBtn').onclick = () => {
-  $('drawer').classList.add('open');
-  $('drawerBg').classList.add('show');
-};
-$('closeDrawer').onclick = () => {
-  $('drawer').classList.remove('open');
-  $('drawerBg').classList.remove('show');
-};
-$('drawerBg').onclick = () => {
-  $('drawer').classList.remove('open');
-  $('drawerBg').classList.remove('show');
-};
-
-/* =========================================================
-   PROCEED ALSO PUSHES TO CART (so user can "add to cart")
-========================================================= */
-const _origProceed = $('proceedBtn').onclick;
-$('proceedBtn').onclick = () => {
-  const r = calc();
-  if(!r){ toast('Something went wrong'); return; }
-  if(!state.current.date){ toast('Please pick a delivery date'); return; }
-
-  // Push to cart
-  state.cart.push({ calc: r, date: state.current.date });
-  updateCartUI();
-
-  $('qtyModalBg').classList.remove('show');
-  toast(`${r.p.grade} · ${r.qty} m³ added to cart`);
-};
+  if(e.key === STORAGE_SETTINGS){
+    SETTINGS = loadSettings();
+    toast('Settings updated');
+  }
+});
 
 /* =========================================================
    INIT
 ========================================================= */
+renderCatTabs();
 renderProducts();
 updateCartUI();
-recalc();
 </script>
 </body>
 </html>
