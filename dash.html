@@ -11,12 +11,13 @@
     --text:#0f172a;
     --muted:#64748b;
     --border:#e2e8f0;
-    --primary:#c2410c;          /* Maricopa brand: deep terracotta */
+    --primary:#c2410c;
     --primary-2:#f97316;
     --primary-soft:#fff4ec;
     --success:#10b981;
     --danger:#ef4444;
     --accent:#0ea5e9;
+    --warning:#f59e0b;
     --shadow:0 6px 24px rgba(15,23,42,.07);
     --radius:16px;
   }
@@ -39,6 +40,130 @@
   }
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   input,select{font-family:inherit}
+
+  /* ================= BOOT LOADER ================= */
+  .boot{
+    position:fixed;inset:0;background:var(--bg);z-index:999;
+    display:grid;place-items:center;text-align:center;
+    transition:opacity .4s;padding:20px;
+  }
+  .boot.hidden{opacity:0;pointer-events:none}
+  .boot .spin{
+    width:52px;height:52px;border:4px solid var(--border);
+    border-top-color:var(--primary);border-radius:50%;
+    margin:0 auto 18px;animation:spin .8s linear infinite;
+  }
+  .boot p{font-size:15px;font-weight:700;letter-spacing:-.2px}
+  .boot small{display:block;color:var(--muted);font-size:12.5px;margin-top:8px;max-width:340px;line-height:1.5}
+  .boot .retry{
+    margin-top:18px;padding:10px 20px;border-radius:10px;
+    border:1px solid var(--border);background:var(--card);
+    font-size:13px;font-weight:700;color:var(--text);
+    transition:.2s;
+  }
+  .boot .retry:hover{border-color:var(--primary);color:var(--primary)}
+  .boot .err{color:var(--danger);font-size:13px;margin-top:8px;max-width:340px;line-height:1.5;display:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ================= CONNECTION STATUS BAR ================= */
+  .status-bar{
+    position:fixed;top:12px;left:50%;transform:translateX(-50%);
+    background:var(--card);border:1px solid var(--border);
+    border-radius:30px;padding:7px 14px;
+    display:flex;align-items:center;gap:8px;
+    font-size:12px;font-weight:700;
+    box-shadow:var(--shadow);z-index:95;
+    transition:.3s;white-space:nowrap;
+    max-width:calc(100vw - 24px);
+  }
+  .status-bar .dot{
+    width:9px;height:9px;border-radius:50%;
+    background:var(--muted);transition:.3s;flex-shrink:0;
+  }
+  .status-bar.ok{border-color:rgba(16,185,129,.5);color:var(--success)}
+  .status-bar.ok .dot{background:var(--success);box-shadow:0 0 0 4px rgba(16,185,129,.2);animation:pulse 2s infinite}
+  .status-bar.offline{border-color:rgba(239,68,68,.5);color:var(--danger)}
+  .status-bar.offline .dot{background:var(--danger);box-shadow:0 0 0 4px rgba(239,68,68,.2)}
+  .status-bar.checking{color:var(--accent)}
+  .status-bar.checking .dot{background:var(--accent);animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.4}}
+
+  /* ================= TOAST SYSTEM ================= */
+  .toast-stack{
+    position:fixed;top:20px;right:20px;z-index:9999;
+    display:flex;flex-direction:column;gap:10px;
+    pointer-events:none;
+    max-width:min(380px, calc(100vw - 32px));
+    width:calc(100% - 32px);
+  }
+  .toast-item{
+    pointer-events:auto;
+    display:flex;align-items:flex-start;gap:12px;
+    padding:14px 16px;
+    border-radius:14px;
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:
+      0 10px 30px rgba(15,23,42,.12),
+      0 2px 6px rgba(15,23,42,.06);
+    position:relative;overflow:hidden;
+    animation:toastIn .45s cubic-bezier(.21,1.02,.73,1) forwards;
+    backdrop-filter:blur(10px);
+  }
+  html[data-theme="dark"] .toast-item{
+    box-shadow:0 10px 30px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+  }
+  .toast-item.removing{animation:toastOut .3s ease forwards}
+  @keyframes toastIn{
+    from{opacity:0;transform:translateX(120%) scale(.9);}
+    to{opacity:1;transform:translateX(0) scale(1);}
+  }
+  @keyframes toastOut{
+    from{opacity:1;transform:translateX(0) scale(1);max-height:120px;}
+    to{opacity:0;transform:translateX(120%) scale(.9);max-height:0;padding:0;margin:0;border:0;}
+  }
+  .toast-item .t-icon{
+    width:38px;height:38px;border-radius:10px;
+    display:grid;place-items:center;font-size:18px;flex-shrink:0;
+    position:relative;z-index:2;font-weight:900;
+  }
+  .toast-item .t-body{flex:1;min-width:0;position:relative;z-index:2}
+  .toast-item .t-title{
+    font-size:13.5px;font-weight:800;letter-spacing:-.1px;
+    margin-bottom:2px;line-height:1.3;
+  }
+  .toast-item .t-msg{
+    font-size:12.5px;color:var(--muted);line-height:1.45;
+    word-wrap:break-word;
+  }
+  .toast-item .t-close{
+    width:24px;height:24px;border-radius:6px;
+    display:grid;place-items:center;font-size:14px;color:var(--muted);
+    flex-shrink:0;transition:.2s;position:relative;z-index:2;
+  }
+  .toast-item .t-close:hover{background:var(--bg);color:var(--text)}
+  .toast-item .t-progress{
+    position:absolute;bottom:0;left:0;height:3px;
+    background:currentColor;opacity:.7;
+    animation:toastProgress linear forwards;
+    transform-origin:left;
+  }
+  @keyframes toastProgress{
+    from{width:100%;}
+    to{width:0%;}
+  }
+  .toast-item.t-success .t-icon{background:rgba(16,185,129,.14);color:var(--success)}
+  .toast-item.t-success .t-progress{background:var(--success)}
+  .toast-item.t-success{border-left:3px solid var(--success)}
+  .toast-item.t-error .t-icon{background:rgba(239,68,68,.14);color:var(--danger)}
+  .toast-item.t-error .t-progress{background:var(--danger)}
+  .toast-item.t-error{border-left:3px solid var(--danger)}
+  .toast-item.t-warning .t-icon{background:rgba(245,158,11,.16);color:var(--warning)}
+  .toast-item.t-warning .t-progress{background:var(--warning)}
+  .toast-item.t-warning{border-left:3px solid var(--warning)}
+  .toast-item.t-info .t-icon{background:rgba(14,165,233,.14);color:var(--accent)}
+  .toast-item.t-info .t-progress{background:var(--accent)}
+  .toast-item.t-info{border-left:3px solid var(--accent)}
 
   /* ================= HEADER ================= */
   header{
@@ -102,7 +227,6 @@
   /* ================= WRAP ================= */
   .wrap{max-width:1240px;margin:0 auto;padding:26px 18px 70px}
 
-  /* category tabs */
   .cat-tabs{
     display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;
     scrollbar-width:none;margin-bottom:6px;
@@ -124,7 +248,7 @@
   .section-head p{font-size:12.5px;color:var(--muted);margin-top:2px}
   .result-count{font-size:12.5px;color:var(--muted);font-weight:600}
 
-  /* ================= PRODUCT GRID ================= */
+  /* ================= PRODUCTS ================= */
   .products{
     display:grid;gap:16px;
     grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
@@ -132,18 +256,26 @@
   .p-card{
     background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
     overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
-    transition:transform .22s, border-color .22s;cursor:pointer;
+    transition:transform .22s, border-color .22s;cursor:pointer;position:relative;
   }
   .p-card:hover{transform:translateY(-3px);border-color:var(--primary)}
+  .p-card.oos{opacity:.62;cursor:not-allowed}
+  .p-card.oos:hover{transform:none;border-color:var(--border)}
   .p-thumb{
     height:120px;display:grid;place-items:center;font-size:46px;
-    position:relative;
+    position:relative;overflow:hidden;
   }
+  .p-thumb img{width:100%;height:100%;object-fit:cover}
   .p-cat-pill{
     position:absolute;top:10px;left:10px;
     background:rgba(0,0,0,.55);color:#fff;font-size:10.5px;font-weight:800;
     padding:4px 10px;border-radius:20px;backdrop-filter:blur(4px);letter-spacing:.3px;
-    text-transform:uppercase;
+    text-transform:uppercase;z-index:2;
+  }
+  .oos-pill{
+    position:absolute;top:10px;right:10px;
+    background:var(--danger);color:#fff;font-size:10.5px;font-weight:800;
+    padding:4px 10px;border-radius:20px;letter-spacing:.3px;z-index:2;
   }
   .p-body{padding:14px 15px 16px;display:flex;flex-direction:column;flex:1}
   .p-body h3{font-size:14.5px;letter-spacing:-.2px;line-height:1.3}
@@ -170,7 +302,6 @@
   .btn-block{width:100%;justify-content:center}
   .btn:disabled{opacity:.5;cursor:not-allowed;filter:none}
 
-  /* empty state */
   .empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted)}
   .empty .e-ico{font-size:48px;margin-bottom:12px;opacity:.5}
 
@@ -204,15 +335,15 @@
   }
   .modal-foot .btn{flex:1;justify-content:center}
 
-  /* product summary */
   .prod-summary{
     display:flex;gap:13px;background:var(--bg);
     padding:13px;border-radius:12px;margin-bottom:16px;align-items:center;
   }
   .prod-summary .ps-ico{
     width:54px;height:54px;border-radius:12px;display:grid;place-items:center;
-    font-size:26px;flex-shrink:0;
+    font-size:26px;flex-shrink:0;overflow:hidden;
   }
+  .prod-summary .ps-ico img{width:100%;height:100%;object-fit:cover}
   .prod-summary h4{font-size:14.5px;letter-spacing:-.2px}
   .prod-summary small{font-size:12px;color:var(--muted);display:block;margin-top:3px;line-height:1.4}
 
@@ -227,7 +358,6 @@
   .field input:focus,.field select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(194,65,12,.14)}
   .field .hint{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.4}
 
-  /* size option cards */
   .sizes{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
   .size-opt{
     padding:11px 12px;border-radius:10px;border:1px solid var(--border);
@@ -238,7 +368,6 @@
   .size-opt strong{font-size:12.5px;display:block;letter-spacing:-.1px}
   .size-opt small{font-size:11px;color:var(--muted);display:block;margin-top:2px}
 
-  /* quantity stepper */
   .qty-row{display:flex;align-items:center;gap:10px}
   .qty-row input{flex:1;text-align:center;font-size:16px;font-weight:700}
   .step{
@@ -254,26 +383,6 @@
   }
   .quick-qty button:hover{border-color:var(--primary);color:var(--primary)}
 
-  /* add-ons */
-  .opt{
-    display:flex;align-items:center;gap:11px;padding:11px 13px;
-    border-radius:11px;border:1px solid var(--border);background:var(--bg);
-    margin-bottom:9px;cursor:pointer;transition:.2s;
-  }
-  .opt:hover{border-color:var(--primary)}
-  .opt.checked{border-color:var(--primary);background:var(--primary-soft)}
-  .opt .chk{
-    width:20px;height:20px;border-radius:6px;border:2px solid var(--border);
-    display:grid;place-items:center;flex-shrink:0;font-size:12px;color:#fff;
-    transition:.2s;background:var(--card);
-  }
-  .opt.checked .chk{background:var(--primary);border-color:var(--primary)}
-  .opt .o-body{flex:1}
-  .opt .o-body strong{font-size:13px;display:block}
-  .opt .o-body small{font-size:11px;color:var(--muted)}
-  .opt .o-price{font-size:12.5px;font-weight:700;white-space:nowrap;color:var(--primary)}
-
-  /* live calculation */
   .calc-box{
     background:var(--bg);border-radius:12px;padding:14px;margin-top:6px;
     border:1px dashed var(--border);
@@ -325,11 +434,9 @@
     width:46px;height:46px;border:4px solid var(--border);border-top-color:var(--primary);
     border-radius:50%;margin:0 auto 16px;animation:spin .8s linear infinite;
   }
-  @keyframes spin{to{transform:rotate(360deg)}}
   .processing p{font-size:14px;font-weight:600}
   .processing small{font-size:12px;color:var(--muted);display:block;margin-top:6px}
 
-  /* success */
   .success{text-align:center;padding:24px 4px 6px}
   .success .s-ico{
     width:74px;height:74px;border-radius:50%;background:rgba(16,185,129,.13);
@@ -367,8 +474,9 @@
   .cart-item:last-child{border-bottom:none}
   .ci-ico{
     width:46px;height:46px;border-radius:10px;display:grid;place-items:center;
-    font-size:22px;flex-shrink:0;
+    font-size:22px;flex-shrink:0;overflow:hidden;
   }
+  .ci-ico img{width:100%;height:100%;object-fit:cover}
   .ci-body{flex:1;min-width:0}
   .ci-body strong{font-size:13.5px;display:block;line-height:1.3}
   .ci-body small{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
@@ -379,20 +487,9 @@
   .empty-cart{text-align:center;padding:44px 10px;color:var(--muted);font-size:13px;line-height:1.6}
   .empty-cart .e-ico{font-size:46px;margin-bottom:12px;opacity:.5}
 
-  /* ============ TOAST ============ */
-  .toast{
-    position:fixed;bottom:22px;left:50%;transform:translate(-50%,140%);
-    background:var(--text);color:var(--bg);padding:12px 20px;border-radius:12px;
-    font-size:13px;font-weight:600;z-index:400;transition:transform .35s;
-    display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.25);
-    max-width:90vw;
-  }
-  .toast.show{transform:translate(-50%,0)}
-
   @keyframes fade{from{opacity:0}to{opacity:1}}
   @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
 
-  /* footer */
   footer{
     text-align:center;padding:24px 18px;color:var(--muted);font-size:12px;
     border-top:1px solid var(--border);margin-top:20px;
@@ -401,6 +498,21 @@
 
   /* ============ RESPONSIVE ============ */
   @media(max-width:640px){
+    .toast-stack{
+      top:auto;bottom:12px;right:12px;left:12px;width:auto;
+      max-width:none;
+    }
+    .toast-item{animation:toastInMobile .4s cubic-bezier(.21,1.02,.73,1) forwards}
+    @keyframes toastInMobile{
+      from{opacity:0;transform:translateY(30px) scale(.95);}
+      to{opacity:1;transform:translateY(0) scale(1);}
+    }
+    .toast-item.removing{animation:toastOutMobile .3s ease forwards}
+    @keyframes toastOutMobile{
+      from{opacity:1;transform:translateY(0) scale(1);max-height:200px;}
+      to{opacity:0;transform:translateY(30px) scale(.95);max-height:0;padding:0;margin:0;border:0;}
+    }
+    .status-bar{top:8px;font-size:11px;padding:6px 12px}
     .header-inner{padding:10px 14px}
     .brand{font-size:15px}
     .brand small{display:none}
@@ -429,6 +541,26 @@
 </style>
 </head>
 <body>
+
+<!-- ================= BOOT LOADER ================= -->
+<div class="boot" id="boot">
+  <div>
+    <div class="spin" id="bootSpin"></div>
+    <p id="bootTitle">Loading Maricopa Concrete…</p>
+    <small id="bootMsg">Connecting to our store server</small>
+    <div class="err" id="bootErr"></div>
+    <button class="retry" id="bootRetry" style="display:none">Retry Connection</button>
+  </div>
+</div>
+
+<!-- ================= CONNECTION STATUS BAR ================= -->
+<div class="status-bar checking" id="statusBar">
+  <span class="dot"></span>
+  <span id="statusText">Checking connection…</span>
+</div>
+
+<!-- ================= TOAST STACK ================= -->
+<div class="toast-stack" id="toastStack"></div>
 
 <!-- ================= HEADER ================= -->
 <header>
@@ -527,7 +659,7 @@
         <div class="calc-row"><span>Subtotal</span><span id="calcBase">—</span></div>
         <div class="calc-row discount-row" id="discRow" style="display:none"><span>Bulk discount</span><span id="calcDisc">—</span></div>
         <div class="calc-row"><span>Delivery fee</span><span id="calcDelivery">—</span></div>
-        <div class="calc-row"><span>VAT (16%)</span><span id="calcVat">—</span></div>
+        <div class="calc-row"><span>VAT (<span id="calcVatPct">16</span>%)</span><span id="calcVat">—</span></div>
         <div class="calc-row total"><span>Total <span class="live-tag">live</span></span><span id="calcTotal">—</span></div>
       </div>
     </div>
@@ -554,162 +686,60 @@
   <div class="drawer-foot" id="drawerFoot"></div>
 </aside>
 
-<!-- ================= TOAST ================= -->
-<div class="toast" id="toast"></div>
-
 <footer>
   © 2025 <strong>Maricopa Concrete &amp; Allied Company</strong> · All rights reserved · Nairobi, Kenya
 </footer>
 
 <script>
 /* =========================================================
-   DEFAULT CATALOG
-   (Will be OVERRIDDEN by anything the Admin Panel saves
-    into localStorage under key "maricopa_products")
-========================================================= */
-const DEFAULT_PRODUCTS = [
-  /* ---------- ROAD & DRAINAGE ---------- */
-  { id:'road-kerbs', name:'Road Kerbs (Channel)', cat:'road', icon:'🛣️', color:'#c2410c',
-    desc:'Precast concrete road kerbs with integrated channel profile. Standard 1m lengths.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'1 m straight', mult:1},
-      {label:'1 m radius', mult:1.15},
-      {label:'1 m transition', mult:1.2},
-    ], basePrice:1850, minQty:10 },
+   ██  CONFIGURATION — CHANGE THIS TO POINT AT YOUR BACKEND
+   =========================================================
 
-  { id:'road-channels', name:'Road Channels', cat:'road', icon:'🧱', color:'#ea580c',
-    desc:'Precast U/V-shaped gutter channels for roadside drainage. 1m sections.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'300 mm width', mult:1},
-      {label:'450 mm width', mult:1.3},
-      {label:'600 mm width', mult:1.65},
-    ], basePrice:2100, minQty:10 },
+   The API_BASE must be the full base URL of your backend.
+   Example: "https://api.maricopa.co.ke"
 
-  { id:'shallow-drains', name:'Shallow Drains', cat:'road', icon:'💧', color:'#0891b2',
-    desc:'Low-profile precast drainage channels for driveways, yards and light drainage.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'1 m · 200mm', mult:1},
-      {label:'1 m · 300mm', mult:1.25},
-    ], basePrice:1600, minQty:10 },
+   Your backend MUST expose these endpoints:
 
-  { id:'culverts', name:'Culverts', cat:'road', icon:'⚪', color:'#0e7490',
-    desc:'Precast concrete culvert pipes for stormwater under roads and driveways.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'300 mm dia · 1m', mult:1},
-      {label:'450 mm dia · 1m', mult:1.4},
-      {label:'600 mm dia · 1m', mult:1.85},
-      {label:'900 mm dia · 1m', mult:2.6},
-    ], basePrice:4200, minQty:5 },
+   GET  {API_BASE}/health
+        → 200 OK { status:"ok" }  (used for connection check)
 
-  /* ---------- BLOCKS ---------- */
-  { id:'solid-blocks', name:'Solid Blocks', cat:'blocks', icon:'🧱', color:'#7c2d12',
-    desc:'Dense solid concrete blocks — load-bearing walls and foundations. High strength.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'6 inch', mult:1},
-      {label:'8 inch', mult:1.3},
-      {label:'9 inch', mult:1.45},
-    ], basePrice:65, minQty:50 },
+   GET  {API_BASE}/api/config
+        → { products:[...], categories:[...],
+            deliveryZones:[...], discounts:[...], vat:0.16 }
 
-  { id:'hollow-blocks', name:'Hollow Blocks', cat:'blocks', icon:'🟫', color:'#92400e',
-    desc:'Lightweight hollow concrete blocks — walls and partitions. Good insulation.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'6 inch', mult:1},
-      {label:'8 inch', mult:1.25},
-      {label:'9 inch', mult:1.4},
-    ], basePrice:55, minQty:50 },
+   POST {API_BASE}/api/mpesa/stkpush
+        Body: { phone:"254712345678", amount:12345,
+                accountRef:"MAR-XXXX", description:"..." }
+        → { success:true, checkoutRequestId:"ws_CO_..." }
+        (your backend calls Daraja STK push and returns the id)
 
-  /* ---------- PAVING ---------- */
-  { id:'paving-slabs', name:'Paving Slabs', cat:'paving', icon:'⬜', color:'#475569',
-    desc:'Flat precast paving slabs for footpaths, driveways and patios. Smooth finish.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'300×300 mm', mult:1},
-      {label:'400×400 mm', mult:1.6},
-      {label:'600×600 mm', mult:2.4},
-    ], basePrice:180, minQty:20 },
+   GET  {API_BASE}/api/mpesa/status/{checkoutRequestId}
+        → { status:"pending"|"success"|"failed",
+            mpesaReceipt:"ABC123", amount:12345 }
+        (poll this after STK push; your backend queries Daraja)
 
-  { id:'ordinary-cabros', name:'Ordinary Cabros', cat:'paving', icon:'🔲', color:'#334155',
-    desc:'Standard interlocking paving blocks — driveways, parking and roads.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'60 mm thick', mult:1},
-      {label:'80 mm thick', mult:1.25},
-    ], basePrice:75, minQty:100 },
+   POST {API_BASE}/api/orders
+        Body: { items:[...], total, phone, mpesaReceipt, ... }
+        → { orderId:"MAR-123456" }
+        (called after successful payment to persist the order)
 
-  { id:'special-cabros', name:'Special Cabros', cat:'paving', icon:'🔳', color:'#1e293b',
-    desc:'Special-shape or coloured interlocking pavers for decorative paving patterns.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'Decorative · 60mm', mult:1},
-      {label:'Decorative · 80mm', mult:1.3},
-      {label:'Coloured · 60mm', mult:1.2},
-    ], basePrice:95, minQty:100 },
+   Leave API_BASE empty to run in DEMO/OFFLINE mode (uses localStorage
+   + simulated payments). Fill it in to go live.
+   ========================================================= */
+const API_BASE = ""; // ← put your backend URL here
 
-  /* ---------- GARDEN & LANDSCAPING ---------- */
-  { id:'garden-kerbs', name:'Garden Kerbs', cat:'garden', icon:'🌿', color:'#15803d',
-    desc:'Decorative garden edging kerbs — beds, paths and landscaping borders.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'Straight · 1m', mult:1},
-      {label:'Curved · 1m', mult:1.2},
-    ], basePrice:850, minQty:20 },
-
-  { id:'fencing-posts', name:'Fencing Posts', cat:'garden', icon:'🏡', color:'#166534',
-    desc:'Reinforced precast concrete fencing posts — boundary fences and chain-link support.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'6 ft', mult:1},
-      {label:'8 ft', mult:1.3},
-      {label:'9 ft', mult:1.45},
-    ], basePrice:950, minQty:10 },
-
-  /* ---------- ARCHITECTURAL & FINISHING ---------- */
-  { id:'pillar-coping', name:'Pillar Coping', cat:'arch', icon:'🏛️', color:'#7c3aed',
-    desc:'Capping stones for pillars and columns — protective and decorative.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'Standard 15"', mult:1},
-      {label:'Large 18"', mult:1.3},
-    ], basePrice:1200, minQty:10 },
-
-  { id:'wall-coping', name:'Wall Coping', cat:'arch', icon:'🧱', color:'#6d28d9',
-    desc:'Capping stones for boundary and retaining walls. Flat, angled or rounded.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'Flat · 1m', mult:1},
-      {label:'Angled · 1m', mult:1.15},
-      {label:'Rounded · 1m', mult:1.2},
-    ], basePrice:1100, minQty:10 },
-
-  { id:'window-seals', name:'Window Seals (Sills)', cat:'arch', icon:'🪟', color:'#9333ea',
-    desc:'Precast window sills — water runoff and architectural finish under windows.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'0.9 m', mult:1},
-      {label:'1.2 m', mult:1.25},
-      {label:'1.5 m', mult:1.5},
-    ], basePrice:650, minQty:10 },
-
-  { id:'mouldings', name:'Mouldings', cat:'arch', icon:'🎨', color:'#a21caf',
-    desc:'Decorative precast concrete mouldings — cornices, bands and architectural trims.',
-    unit:'piece', unitLabel:'per piece',
-    sizes:[
-      {label:'Small · 1m', mult:1},
-      {label:'Medium · 1m', mult:1.3},
-      {label:'Large · 1m', mult:1.6},
-    ], basePrice:900, minQty:10 },
-];
+const POLL_INTERVAL_MS = 2500;
+const POLL_MAX_ATTEMPTS = 24;   // ~60s total
+const HEALTH_CHECK_INTERVAL_MS = 30000;
+const STORAGE_KEY = 'maricopa_products';
+const STORAGE_SETTINGS = 'maricopa_settings';
+const STORAGE_CART = 'maricopa_cart';
 
 /* =========================================================
-   CATEGORIES
+   DEFAULT FALLBACK DATA
+   Used only when the backend is unreachable AND localStorage is empty.
 ========================================================= */
-const CATEGORIES = [
+const DEFAULT_CATEGORIES = [
   {id:'all',    label:'All Products',        icon:'🏗️', desc:'Tap any product to select size and quantity'},
   {id:'road',   label:'Road & Drainage',     icon:'🛣️', desc:'Kerbs, channels, drains and culverts'},
   {id:'blocks', label:'Blocks',              icon:'🧱', desc:'Solid and hollow masonry blocks'},
@@ -718,9 +748,84 @@ const CATEGORIES = [
   {id:'arch',   label:'Architectural',       icon:'🏛️', desc:'Coping, window seals and mouldings'},
 ];
 
-/* =========================================================
-   DELIVERY ZONES (can also be overridden by admin later)
-========================================================= */
+const DEFAULT_PRODUCTS = [
+  { id:'road-kerbs', name:'Road Kerbs (Channel)', cat:'road', icon:'🛣️', color:'#c2410c',
+    desc:'Precast concrete road kerbs with integrated channel profile. Standard 1m lengths.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'1 m straight',mult:1},{label:'1 m radius',mult:1.15},{label:'1 m transition',mult:1.2}],
+    basePrice:1850, minQty:10, inStock:true },
+  { id:'road-channels', name:'Road Channels', cat:'road', icon:'🧱', color:'#ea580c',
+    desc:'Precast U/V-shaped gutter channels for roadside drainage. 1m sections.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'300 mm width',mult:1},{label:'450 mm width',mult:1.3},{label:'600 mm width',mult:1.65}],
+    basePrice:2100, minQty:10, inStock:true },
+  { id:'shallow-drains', name:'Shallow Drains', cat:'road', icon:'💧', color:'#0891b2',
+    desc:'Low-profile precast drainage channels for driveways, yards and light drainage.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'1 m · 200mm',mult:1},{label:'1 m · 300mm',mult:1.25}],
+    basePrice:1600, minQty:10, inStock:true },
+  { id:'culverts', name:'Culverts', cat:'road', icon:'⚪', color:'#0e7490',
+    desc:'Precast concrete culvert pipes for stormwater under roads and driveways.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'300 mm dia · 1m',mult:1},{label:'450 mm dia · 1m',mult:1.4},{label:'600 mm dia · 1m',mult:1.85},{label:'900 mm dia · 1m',mult:2.6}],
+    basePrice:4200, minQty:5, inStock:true },
+  { id:'solid-blocks', name:'Solid Blocks', cat:'blocks', icon:'🧱', color:'#7c2d12',
+    desc:'Dense solid concrete blocks — load-bearing walls and foundations. High strength.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'6 inch',mult:1},{label:'8 inch',mult:1.3},{label:'9 inch',mult:1.45}],
+    basePrice:65, minQty:50, inStock:true },
+  { id:'hollow-blocks', name:'Hollow Blocks', cat:'blocks', icon:'🟫', color:'#92400e',
+    desc:'Lightweight hollow concrete blocks — walls and partitions. Good insulation.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'6 inch',mult:1},{label:'8 inch',mult:1.25},{label:'9 inch',mult:1.4}],
+    basePrice:55, minQty:50, inStock:true },
+  { id:'paving-slabs', name:'Paving Slabs', cat:'paving', icon:'⬜', color:'#475569',
+    desc:'Flat precast paving slabs for footpaths, driveways and patios. Smooth finish.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'300×300 mm',mult:1},{label:'400×400 mm',mult:1.6},{label:'600×600 mm',mult:2.4}],
+    basePrice:180, minQty:20, inStock:true },
+  { id:'ordinary-cabros', name:'Ordinary Cabros', cat:'paving', icon:'🔲', color:'#334155',
+    desc:'Standard interlocking paving blocks — driveways, parking and roads.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'60 mm thick',mult:1},{label:'80 mm thick',mult:1.25}],
+    basePrice:75, minQty:100, inStock:true },
+  { id:'special-cabros', name:'Special Cabros', cat:'paving', icon:'🔳', color:'#1e293b',
+    desc:'Special-shape or coloured interlocking pavers for decorative paving patterns.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'Decorative · 60mm',mult:1},{label:'Decorative · 80mm',mult:1.3},{label:'Coloured · 60mm',mult:1.2}],
+    basePrice:95, minQty:100, inStock:true },
+  { id:'garden-kerbs', name:'Garden Kerbs', cat:'garden', icon:'🌿', color:'#15803d',
+    desc:'Decorative garden edging kerbs — beds, paths and landscaping borders.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'Straight · 1m',mult:1},{label:'Curved · 1m',mult:1.2}],
+    basePrice:850, minQty:20, inStock:true },
+  { id:'fencing-posts', name:'Fencing Posts', cat:'garden', icon:'🏡', color:'#166534',
+    desc:'Reinforced precast concrete fencing posts — boundary fences and chain-link support.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'6 ft',mult:1},{label:'8 ft',mult:1.3},{label:'9 ft',mult:1.45}],
+    basePrice:950, minQty:10, inStock:true },
+  { id:'pillar-coping', name:'Pillar Coping', cat:'arch', icon:'🏛️', color:'#7c3aed',
+    desc:'Capping stones for pillars and columns — protective and decorative.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'Standard 15"',mult:1},{label:'Large 18"',mult:1.3}],
+    basePrice:1200, minQty:10, inStock:true },
+  { id:'wall-coping', name:'Wall Coping', cat:'arch', icon:'🧱', color:'#6d28d9',
+    desc:'Capping stones for boundary and retaining walls. Flat, angled or rounded.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'Flat · 1m',mult:1},{label:'Angled · 1m',mult:1.15},{label:'Rounded · 1m',mult:1.2}],
+    basePrice:1100, minQty:10, inStock:true },
+  { id:'window-seals', name:'Window Seals (Sills)', cat:'arch', icon:'🪟', color:'#9333ea',
+    desc:'Precast window sills — water runoff and architectural finish under windows.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'0.9 m',mult:1},{label:'1.2 m',mult:1.25},{label:'1.5 m',mult:1.5}],
+    basePrice:650, minQty:10, inStock:true },
+  { id:'mouldings', name:'Mouldings', cat:'arch', icon:'🎨', color:'#a21caf',
+    desc:'Decorative precast concrete mouldings — cornices, bands and architectural trims.',
+    unit:'piece', unitLabel:'per piece',
+    sizes:[{label:'Small · 1m',mult:1},{label:'Medium · 1m',mult:1.3},{label:'Large · 1m',mult:1.6}],
+    basePrice:900, minQty:10, inStock:true },
+];
+
 const DEFAULT_DELIVERY_ZONES = [
   {id:'nairobi',    label:'Nairobi & environs', fee:2500},
   {id:'kiambu',     label:'Kiambu / Thika',     fee:3500},
@@ -730,9 +835,6 @@ const DEFAULT_DELIVERY_ZONES = [
   {id:'pickup',     label:'Customer pickup',    fee:0},
 ];
 
-/* =========================================================
-   BULK DISCOUNT TIERS
-========================================================= */
 const DEFAULT_DISCOUNTS = [
   {min:1,   pct:0},
   {min:100, pct:5},
@@ -740,103 +842,332 @@ const DEFAULT_DISCOUNTS = [
   {min:1000,pct:15},
 ];
 
-const VAT_RATE = 0.16;
-const MPESA_ACCOUNT = 'MARICOPA';
-const STORAGE_KEY = 'maricopa_products';
-const STORAGE_SETTINGS = 'maricopa_settings';
-
 /* =========================================================
-   LOAD DATA — prefer localStorage (from admin), fallback to defaults
+   RUNTIME STATE
 ========================================================= */
-function loadProducts(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return DEFAULT_PRODUCTS.slice();
-    const parsed = JSON.parse(raw);
-    if(Array.isArray(parsed) && parsed.length) return parsed;
-    return DEFAULT_PRODUCTS.slice();
-  }catch(e){ return DEFAULT_PRODUCTS.slice(); }
-}
-function loadSettings(){
-  let out = {
-    deliveryZones: DEFAULT_DELIVERY_ZONES.slice(),
-    discounts: DEFAULT_DISCOUNTS.slice(),
-    vat: VAT_RATE,
-  };
-  try{
-    const raw = localStorage.getItem(STORAGE_SETTINGS);
-    if(raw){
-      const s = JSON.parse(raw);
-      if(s.deliveryZones?.length) out.deliveryZones = s.deliveryZones;
-      if(s.discounts?.length) out.discounts = s.discounts;
-      if(typeof s.vat === 'number') out.vat = s.vat;
-    }
-  }catch(e){}
-  return out;
-}
-
-let PRODUCTS = loadProducts();
-let SETTINGS = loadSettings();
-
-/* =========================================================
-   STATE
-========================================================= */
-let state = {
+let APP = {
+  online: false,
+  products: [],
+  categories: DEFAULT_CATEGORIES.slice(),
+  deliveryZones: DEFAULT_DELIVERY_ZONES.slice(),
+  discounts: DEFAULT_DISCOUNTS.slice(),
+  vat: 0.16,
+  lastHealthCheck: 0,
   activeCat: 'all',
-  current: null,   // { product, sizeIndex, qty, date, zoneId }
-  cart: [],        // [{ productId, sizeIndex, qty, date, zoneId, snap:{...} }]
-  pending: null,   // order being paid
+  current: null,
+  cart: [],
+  pending: null,
   paymentRef: null,
 };
 
 /* =========================================================
-   HELPERS
+   SMALL UTILITIES
 ========================================================= */
 const $ = id => document.getElementById(id);
 const html = document.documentElement;
-const fmt = n => 'KSh ' + Math.round(n).toLocaleString();
+const fmt = n => 'KSh ' + Math.round(n || 0).toLocaleString();
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-function toast(msg){
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._t);
-  t._t = setTimeout(()=>t.classList.remove('show'), 2600);
+function escapeHtml(str=''){
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
 
-function getProductById(id){ return PRODUCTS.find(p=>p.id===id); }
-function getZoneById(id){ return SETTINGS.deliveryZones.find(z=>z.id===id); }
-function getDiscountForQty(qty){
-  let pct = 0;
-  SETTINGS.discounts.forEach(d=>{ if(qty >= d.min) pct = d.pct; });
-  return pct;
-}
-function unitPrice(product, sizeIndex){
-  const sz = product.sizes[sizeIndex] || product.sizes[0];
-  return Math.round(product.basePrice * sz.mult);
-}
+/* =========================================================
+   TOAST SYSTEM
+========================================================= */
+const TOAST_ICONS = { success:'✓', error:'✕', warning:'!', info:'i' };
 
-/* full calculation from a config object */
-function calculate(cfg){
-  const p = getProductById(cfg.productId);
-  if(!p) return null;
-  const sizeIndex = cfg.sizeIndex || 0;
-  const qty = Math.max(1, cfg.qty || 1);
-  const unit = unitPrice(p, sizeIndex);
-  const subtotal = unit * qty;
-  const discPct = getDiscountForQty(qty);
-  const discount = Math.round(subtotal * discPct / 100);
-  const afterDiscount = subtotal - discount;
-  const zone = getZoneById(cfg.zoneId) || SETTINGS.deliveryZones[0];
-  const delivery = zone ? zone.fee : 0;
-  const vatBase = afterDiscount + delivery;
-  const vat = Math.round(vatBase * SETTINGS.vat);
-  const total = afterDiscount + delivery + vat;
+const toast = (() => {
+  const stack = $('toastStack');
+  let idc = 0;
+
+  function create({type='info', title='', message='', duration=4500}){
+    const el = document.createElement('div');
+    el.className = `toast-item t-${type}`;
+    el.dataset.id = 't' + (++idc);
+    el.innerHTML = `
+      <div class="t-icon">${TOAST_ICONS[type] || '•'}</div>
+      <div class="t-body">
+        <div class="t-title">${escapeHtml(title)}</div>
+        ${message ? `<div class="t-msg">${escapeHtml(message)}</div>` : ''}
+      </div>
+      <button class="t-close" aria-label="Close">✕</button>
+      ${duration > 0 ? `<div class="t-progress" style="animation-duration:${duration}ms"></div>` : ''}
+    `;
+    stack.appendChild(el);
+
+    const remove = () => {
+      if(!el.isConnected) return;
+      el.classList.add('removing');
+      setTimeout(()=> el.remove(), 300);
+    };
+    el.querySelector('.t-close').onclick = remove;
+    if(duration > 0){
+      el._timer = setTimeout(remove, duration);
+    }
+    return { remove };
+  }
+
   return {
-    p, size: p.sizes[sizeIndex], qty, unit, subtotal,
-    discPct, discount, afterDiscount,
-    zone, delivery, vat, total,
+    show(o){ return create(o); },
+    success(t,m,d=4500){ return create({type:'success',title:t,message:m,duration:d}); },
+    error(t,m,d=6000){ return create({type:'error',title:t,message:m,duration:d}); },
+    warning(t,m,d=5500){ return create({type:'warning',title:t,message:m,duration:d}); },
+    info(t,m,d=4500){ return create({type:'info',title:t,message:m,duration:d}); },
+    clear(){
+      stack.querySelectorAll('.toast-item').forEach(el=>{
+        el.classList.add('removing');
+        setTimeout(()=> el.remove(), 300);
+      });
+    }
   };
+})();
+
+/* =========================================================
+   STATUS BAR
+========================================================= */
+const statusBar = $('statusBar');
+const statusText = $('statusText');
+
+function setStatus(mode, text){
+  statusBar.classList.remove('ok','offline','checking');
+  statusBar.classList.add(mode);
+  statusText.textContent = text;
+}
+
+/* =========================================================
+   BACKEND CLIENT
+========================================================= */
+const api = {
+  base: API_BASE,
+
+  async request(path, opts={}){
+    if(!this.base) throw new Error('Backend not configured (API_BASE is empty)');
+    const url = this.base.replace(/\/$/,'') + path;
+    const ctrl = new AbortController();
+    const tid = setTimeout(()=> ctrl.abort(), 12000);
+    let res;
+    try{
+      res = await fetch(url, {
+        ...opts,
+        headers: { 'Content-Type':'application/json', ...(opts.headers||{}) },
+        signal: ctrl.signal,
+      });
+    } finally {
+      clearTimeout(tid);
+    }
+    if(!res.ok){
+      const body = await res.text().catch(()=> '');
+      throw new Error(`HTTP ${res.status} ${res.statusText} ${body.slice(0,120)}`);
+    }
+    const ct = res.headers.get('content-type') || '';
+    return ct.includes('application/json') ? res.json() : res.text();
+  },
+
+  async health(){
+    if(!this.base) throw new Error('no-base');
+    return this.request('/health', { method:'GET' });
+  },
+
+  async config(){
+    return this.request('/api/config', { method:'GET' });
+  },
+
+  async stkPush(payload){
+    return this.request('/api/mpesa/stkpush', {
+      method:'POST', body: JSON.stringify(payload)
+    });
+  },
+
+  async stkStatus(checkoutRequestId){
+    return this.request(`/api/mpesa/status/${encodeURIComponent(checkoutRequestId)}`,
+      { method:'GET' });
+  },
+
+  async createOrder(payload){
+    return this.request('/api/orders', {
+      method:'POST', body: JSON.stringify(payload)
+    });
+  },
+};
+
+/* =========================================================
+   LOCAL PERSISTENCE
+========================================================= */
+function loadLocalProducts(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return null;
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) && arr.length ? arr : null;
+  }catch(e){ return null; }
+}
+function saveLocalProducts(arr){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }catch(e){}
+}
+function loadLocalSettings(){
+  try{
+    const raw = localStorage.getItem(STORAGE_SETTINGS);
+    if(!raw) return null;
+    const s = JSON.parse(raw);
+    return s && typeof s === 'object' ? s : null;
+  }catch(e){ return null; }
+}
+function saveLocalSettings(s){
+  try{ localStorage.setItem(STORAGE_SETTINGS, JSON.stringify(s)); }catch(e){}
+}
+function loadLocalCart(){
+  try{
+    const raw = localStorage.getItem(STORAGE_CART);
+    if(!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  }catch(e){ return []; }
+}
+function saveLocalCart(cart){
+  try{ localStorage.setItem(STORAGE_CART, JSON.stringify(cart)); }catch(e){}
+}
+
+/* =========================================================
+   BOOT SEQUENCE — detect backend, load catalog
+========================================================= */
+async function boot(){
+  $('boot').classList.remove('hidden');
+  $('bootSpin').style.display = '';
+  $('bootErr').style.display = 'none';
+  $('bootRetry').style.display = 'none';
+  $('bootTitle').textContent = 'Loading Maricopa Concrete…';
+  $('bootMsg').textContent = 'Connecting to our store server';
+  setStatus('checking', 'Checking connection…');
+
+  // 1. Try backend
+  let serverOk = false;
+  if(API_BASE){
+    try{
+      await api.health();
+      serverOk = true;
+    }catch(err){
+      serverOk = false;
+    }
+  }
+
+  if(serverOk){
+    APP.online = true;
+    APP.lastHealthCheck = Date.now();
+    setStatus('ok', 'Connected · Live catalog');
+
+    // 2. Fetch config from backend
+    try{
+      const cfg = await api.config();
+      APP.products     = cfg.products?.length ? cfg.products : (loadLocalProducts() || DEFAULT_PRODUCTS);
+      APP.categories   = cfg.categories?.length ? cfg.categories : DEFAULT_CATEGORIES;
+      APP.deliveryZones= cfg.deliveryZones?.length ? cfg.deliveryZones : DEFAULT_DELIVERY_ZONES;
+      APP.discounts    = cfg.discounts?.length ? cfg.discounts : DEFAULT_DISCOUNTS;
+      APP.vat          = typeof cfg.vat === 'number' ? cfg.vat : 0.16;
+
+      // Cache to localStorage for offline use
+      saveLocalProducts(APP.products);
+      saveLocalSettings({
+        deliveryZones: APP.deliveryZones,
+        discounts: APP.discounts,
+        vat: APP.vat,
+      });
+
+      toast.success('Live catalog loaded', `${APP.products.length} products available.`);
+    }catch(err){
+      // Connected but config failed — fall back to cache
+      useCachedCatalog();
+      toast.warning('Catalog refresh failed', 'Showing cached products.');
+    }
+  } else {
+    APP.online = false;
+    useCachedCatalog();
+
+    // Determine why: not configured vs unreachable
+    if(!API_BASE){
+      setStatus('offline', 'Offline · Demo mode');
+      toast.warning(
+        'Offline — Demo Mode',
+        'No backend is configured (API_BASE is empty). Using cached catalog & simulated payments.',
+        7000
+      );
+    } else {
+      setStatus('offline', 'Offline · Cached catalog');
+      toast.error(
+        'Backend unreachable',
+        `Could not connect to ${API_BASE}. Using cached catalog. Checkout is disabled until connected.`,
+        7500
+      );
+    }
+  }
+
+  // Boot screen out
+  $('boot').classList.add('hidden');
+
+  // Render UI
+  renderCatTabs();
+  renderProducts();
+  updateCartUI();
+
+  // Start background health check
+  setInterval(backgroundHealthCheck, HEALTH_CHECK_INTERVAL_MS);
+}
+
+function useCachedCatalog(){
+  const cachedProducts = loadLocalProducts();
+  const cachedSettings = loadLocalSettings();
+
+  APP.products = cachedProducts || DEFAULT_PRODUCTS.slice();
+  APP.deliveryZones = cachedSettings?.deliveryZones || DEFAULT_DELIVERY_ZONES.slice();
+  APP.discounts = cachedSettings?.discounts || DEFAULT_DISCOUNTS.slice();
+  APP.vat = typeof cachedSettings?.vat === 'number' ? cachedSettings.vat : 0.16;
+}
+
+/* =========================================================
+   BACKGROUND HEALTH CHECK — every 30s
+========================================================= */
+let reconnectToastShown = false;
+
+async function backgroundHealthCheck(){
+  if(!API_BASE) return;
+  const wasOnline = APP.online;
+  try{
+    await api.health();
+    APP.lastHealthCheck = Date.now();
+
+    if(!wasOnline){
+      APP.online = true;
+      setStatus('ok', 'Connected · Live catalog');
+      if(!reconnectToastShown){
+        toast.success('Back online', 'Connection to store server restored.');
+        reconnectToastShown = true;
+      }
+      // Refresh catalog
+      try{
+        const cfg = await api.config();
+        if(cfg.products?.length){
+          APP.products = cfg.products;
+          APP.categories = cfg.categories?.length ? cfg.categories : DEFAULT_CATEGORIES;
+          APP.deliveryZones = cfg.deliveryZones?.length ? cfg.deliveryZones : APP.deliveryZones;
+          APP.discounts = cfg.discounts?.length ? cfg.discounts : APP.discounts;
+          APP.vat = typeof cfg.vat === 'number' ? cfg.vat : APP.vat;
+          saveLocalProducts(APP.products);
+          saveLocalSettings({deliveryZones:APP.deliveryZones,discounts:APP.discounts,vat:APP.vat});
+          renderCatTabs();
+          renderProducts();
+        }
+      }catch(e){}
+    }
+  }catch(err){
+    if(wasOnline){
+      APP.online = false;
+      setStatus('offline', 'Offline · Cached catalog');
+      toast.error('Connection lost', 'We lost connection to the store server. Using cached data.', 6500);
+      reconnectToastShown = false;
+    }
+  }
 }
 
 /* =========================================================
@@ -849,17 +1180,53 @@ $('themeBtn').onclick = () => {
 };
 
 /* =========================================================
-   RENDER CATEGORY TABS
+   HELPERS
+========================================================= */
+function getProductById(id){ return APP.products.find(p=>p.id===id); }
+function getZoneById(id){ return APP.deliveryZones.find(z=>z.id===id); }
+function getDiscountForQty(qty){
+  let pct = 0;
+  APP.discounts.forEach(d=>{ if(qty >= d.min) pct = d.pct; });
+  return pct;
+}
+function unitPrice(product, sizeIndex){
+  const sz = product.sizes?.[sizeIndex] || product.sizes?.[0] || {mult:1};
+  return Math.round((product.basePrice||0) * (sz.mult||1));
+}
+
+function calculate(cfg){
+  const p = getProductById(cfg.productId);
+  if(!p) return null;
+  const sizeIndex = cfg.sizeIndex || 0;
+  const qty = Math.max(1, cfg.qty || 1);
+  const unit = unitPrice(p, sizeIndex);
+  const subtotal = unit * qty;
+  const discPct = getDiscountForQty(qty);
+  const discount = Math.round(subtotal * discPct / 100);
+  const afterDiscount = subtotal - discount;
+  const zone = getZoneById(cfg.zoneId) || APP.deliveryZones[0] || {fee:0,label:'—'};
+  const delivery = zone.fee || 0;
+  const vatBase = afterDiscount + delivery;
+  const vat = Math.round(vatBase * APP.vat);
+  const total = afterDiscount + delivery + vat;
+  return {
+    p, size: p.sizes[sizeIndex], qty, unit, subtotal,
+    discPct, discount, afterDiscount, zone, delivery, vat, total,
+  };
+}
+
+/* =========================================================
+   CATEGORY TABS
 ========================================================= */
 function renderCatTabs(){
-  $('catTabs').innerHTML = CATEGORIES.map(c=>`
-    <button class="cat-tab ${state.activeCat===c.id?'active':''}" data-cat="${c.id}">
-      <span>${c.icon}</span> ${c.label}
+  $('catTabs').innerHTML = APP.categories.map(c=>`
+    <button class="cat-tab ${APP.activeCat===c.id?'active':''}" data-cat="${c.id}">
+      <span>${c.icon}</span> ${escapeHtml(c.label)}
     </button>
   `).join('');
   document.querySelectorAll('.cat-tab').forEach(b=>{
     b.onclick = () => {
-      state.activeCat = b.dataset.cat;
+      APP.activeCat = b.dataset.cat;
       renderCatTabs();
       renderProducts();
     };
@@ -870,13 +1237,13 @@ function renderCatTabs(){
    RENDER PRODUCTS
 ========================================================= */
 function renderProducts(){
-  const cat = CATEGORIES.find(c=>c.id===state.activeCat) || CATEGORIES[0];
+  const cat = APP.categories.find(c=>c.id===APP.activeCat) || APP.categories[0];
   $('catTitle').textContent = cat.label;
-  $('catDesc').textContent = cat.desc;
+  $('catDesc').textContent = cat.desc || '';
 
-  const list = PRODUCTS.filter(p => state.activeCat==='all' || p.cat===state.activeCat);
+  const list = APP.products.filter(p => APP.activeCat==='all' || p.cat===APP.activeCat);
   $('resultCount').textContent = list.length + ' product' + (list.length===1?'':'s');
-  $('heroProductCount').textContent = PRODUCTS.length + '+';
+  $('heroProductCount').textContent = APP.products.length + '+';
 
   if(list.length===0){
     $('productGrid').innerHTML = `<div class="empty"><div class="e-ico">📦</div>No products in this category yet.</div>`;
@@ -884,22 +1251,30 @@ function renderProducts(){
   }
 
   $('productGrid').innerHTML = list.map(p=>{
-    const minPrice = Math.round(p.basePrice * (p.sizes[0]?.mult || 1));
+    const sizes = p.sizes || [{label:'Standard',mult:1}];
+    const minPrice = Math.round((p.basePrice||0) * (sizes[0]?.mult || 1));
+    const inStock = p.inStock !== false;
+    const thumbInner = p.image
+      ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)}" loading="lazy">`
+      : `<span style="filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))">${p.icon || '🧱'}</span>`;
     return `
-      <div class="p-card" data-id="${p.id}">
-        <div class="p-thumb" style="background:${p.color}18">
-          <span class="p-cat-pill" style="background:${p.color}">${p.unitLabel}</span>
-          <span style="filter:drop-shadow(0 4px 8px rgba(0,0,0,.12))">${p.icon}</span>
+      <div class="p-card ${inStock?'':'oos'}" data-id="${escapeHtml(p.id)}">
+        <div class="p-thumb" style="background:${(p.color||'#c2410c')}18">
+          <span class="p-cat-pill" style="background:${p.color||'#c2410c'}">${escapeHtml(p.unitLabel || 'per piece')}</span>
+          ${inStock?'':'<span class="oos-pill">Out of stock</span>'}
+          ${thumbInner}
         </div>
         <div class="p-body">
-          <h3>${p.name}</h3>
-          <p class="desc">${p.desc}</p>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="desc">${escapeHtml(p.desc || '')}</p>
           <div class="p-meta">
-            ${p.sizes.slice(0,3).map(s=>`<span class="tag">${s.label}</span>`).join('')}
+            ${sizes.slice(0,3).map(s=>`<span class="tag">${escapeHtml(s.label)}</span>`).join('')}
           </div>
           <div class="p-foot">
-            <div class="price">${fmt(minPrice)}<small>${p.unitLabel}</small></div>
-            <button class="btn btn-primary" data-select="${p.id}">Order →</button>
+            <div class="price">${fmt(minPrice)}<small>${escapeHtml(p.unitLabel || 'per piece')}</small></div>
+            <button class="btn btn-primary" data-select="${escapeHtml(p.id)}" ${inStock?'':'disabled'}>
+              ${inStock ? 'Order →' : 'Out of stock'}
+            </button>
           </div>
         </div>
       </div>
@@ -907,10 +1282,10 @@ function renderProducts(){
   }).join('');
 
   document.querySelectorAll('[data-select]').forEach(b=>{
-    b.onclick = (e) => { e.stopPropagation(); openConfigure(b.dataset.select); };
+    b.onclick = (e) => { e.stopPropagation(); if(b.disabled) return; openConfigure(b.dataset.select); };
   });
   document.querySelectorAll('.p-card').forEach(c=>{
-    c.onclick = () => openConfigure(c.dataset.id);
+    c.onclick = () => { if(c.classList.contains('oos')) return; openConfigure(c.dataset.id); };
   });
 }
 
@@ -921,74 +1296,71 @@ function openConfigure(id){
   const p = getProductById(id);
   if(!p) return;
 
-  // default delivery date = tomorrow
   const tomorrow = new Date(Date.now()+86400000).toISOString().slice(0,10);
 
-  state.current = {
+  APP.current = {
     productId: id,
     sizeIndex: 0,
     qty: p.minQty || 1,
     date: tomorrow,
-    zoneId: SETTINGS.deliveryZones[0]?.id || 'nairobi',
+    zoneId: APP.deliveryZones[0]?.id || 'pickup',
   };
 
-  // summary
-  $('qsIcon').textContent = p.icon;
-  $('qsIcon').style.background = p.color + '22';
+  $('qsIcon').innerHTML = p.image
+    ? `<img src="${escapeHtml(p.image)}" alt="" loading="lazy">`
+    : escapeHtml(p.icon || '🧱');
+  $('qsIcon').style.background = (p.color||'#c2410c') + '22';
   $('qsName').textContent = p.name;
-  $('qsDesc').textContent = p.desc;
-  $('qtyUnitHint').textContent = `(${p.unit === 'm2' ? 'm²' : p.unitLabel.replace('per ','')})`;
-  $('qtyHint').textContent = `Minimum order: ${p.minQty} ${p.unit === 'piece' ? 'pieces' : ''}. Bulk discounts auto-applied.`;
+  $('qsDesc').textContent = p.desc || '';
+  $('qtyUnitHint').textContent = `(${p.unit === 'm2' ? 'm²' : (p.unitLabel || 'pieces').replace('per ','')})`;
+  $('qtyHint').textContent = `Minimum order: ${p.minQty || 1} ${p.unit === 'piece' ? 'pieces' : ''}. Bulk discounts auto-applied.`;
 
-  // sizes
-  $('sizeOptions').innerHTML = p.sizes.map((s,i)=>`
+  const sizes = p.sizes || [{label:'Standard',mult:1}];
+  $('sizeOptions').innerHTML = sizes.map((s,i)=>`
     <div class="size-opt ${i===0?'checked':''}" data-si="${i}">
-      <strong>${s.label}</strong>
-      <small>${fmt(Math.round(p.basePrice * s.mult))}</small>
+      <strong>${escapeHtml(s.label)}</strong>
+      <small>${fmt(Math.round((p.basePrice||0) * s.mult))}</small>
     </div>
   `).join('');
   document.querySelectorAll('.size-opt').forEach(o=>{
     o.onclick = () => {
       document.querySelectorAll('.size-opt').forEach(x=>x.classList.remove('checked'));
       o.classList.add('checked');
-      state.current.sizeIndex = +o.dataset.si;
+      APP.current.sizeIndex = +o.dataset.si;
       recalc();
     };
   });
 
-  // quick qty buttons — smart per product
-  const quickVals = [p.minQty, p.minQty*5, p.minQty*10, p.minQty*20].filter(v=>v>0);
+  const min = p.minQty || 1;
+  const quickVals = [min, min*5, min*10, min*20].filter(v=>v>0);
   $('quickQty').innerHTML = quickVals.map(v=>`<button data-qq="${v}">${v}</button>`).join('');
   document.querySelectorAll('#quickQty button').forEach(b=>{
     b.onclick = () => {
       $('qtyInput').value = b.dataset.qq;
-      state.current.qty = +b.dataset.qq;
+      APP.current.qty = +b.dataset.qq;
       recalc();
     };
   });
 
-  // qty input
-  $('qtyInput').value = state.current.qty;
+  $('qtyInput').value = APP.current.qty;
   $('qtyInput').oninput = () => {
     let v = Math.max(1, +$('qtyInput').value || 1);
-    state.current.qty = v;
+    APP.current.qty = v;
     recalc();
   };
-  $('qtyInput').onblur = () => { $('qtyInput').value = state.current.qty; };
+  $('qtyInput').onblur = () => { $('qtyInput').value = APP.current.qty; };
 
-  // delivery zones
-  $('deliveryZone').innerHTML = SETTINGS.deliveryZones.map(z=>
-    `<option value="${z.id}">${z.label} — ${z.fee===0 ? 'Free / pickup' : fmt(z.fee)}</option>`
+  $('deliveryZone').innerHTML = APP.deliveryZones.map(z=>
+    `<option value="${escapeHtml(z.id)}">${escapeHtml(z.label)} — ${z.fee===0 ? 'Free / pickup' : fmt(z.fee)}</option>`
   ).join('');
-  $('deliveryZone').value = state.current.zoneId;
+  $('deliveryZone').value = APP.current.zoneId;
   $('deliveryZone').onchange = () => {
-    state.current.zoneId = $('deliveryZone').value;
+    APP.current.zoneId = $('deliveryZone').value;
     recalc();
   };
 
-  // date
-  $('deliveryDate').value = state.current.date;
-  $('deliveryDate').onchange = () => { state.current.date = $('deliveryDate').value; };
+  $('deliveryDate').value = APP.current.date;
+  $('deliveryDate').onchange = () => { APP.current.date = $('deliveryDate').value; };
 
   $('qtyModalBg').classList.add('show');
   recalc();
@@ -997,14 +1369,16 @@ function openConfigure(id){
 /* steppers */
 document.querySelectorAll('.step').forEach(b=>{
   b.onclick = () => {
+    if(!APP.current) return;
     const inp = $('qtyInput');
-    const p = state.current?.productId ? getProductById(state.current.productId) : null;
+    const p = getProductById(APP.current.productId);
     const min = p?.minQty || 1;
-    let v = (+inp.value || min) + (+b.dataset.q) * Math.max(1, Math.round(min/10) || 1);
+    const stepSize = Math.max(1, Math.round(min/10) || 1);
+    let v = (+inp.value || min) + (+b.dataset.q) * stepSize;
     if(v < 1) v = 1;
     if(v > 100000) v = 100000;
     inp.value = v;
-    state.current.qty = v;
+    APP.current.qty = v;
     recalc();
   };
 });
@@ -1013,7 +1387,7 @@ document.querySelectorAll('.step').forEach(b=>{
    LIVE RECALC
 ========================================================= */
 function recalc(){
-  const cfg = state.current;
+  const cfg = APP.current;
   if(!cfg) return;
   const r = calculate(cfg);
   if(!r) return;
@@ -1026,6 +1400,7 @@ function recalc(){
     $('discRow').style.display = 'none';
   }
   $('calcDelivery').textContent = r.delivery === 0 ? 'Free (pickup)' : fmt(r.delivery);
+  $('calcVatPct').textContent = Math.round(APP.vat * 100);
   $('calcVat').textContent = fmt(r.vat);
   $('calcTotal').textContent = fmt(r.total);
 }
@@ -1034,29 +1409,30 @@ function recalc(){
    ADD TO CART
 ========================================================= */
 $('addToCartBtn').onclick = () => {
-  const cfg = state.current;
-  if(!cfg){ toast('Something went wrong'); return; }
+  const cfg = APP.current;
+  if(!cfg){ toast.error('Error', 'Something went wrong.'); return; }
   const p = getProductById(cfg.productId);
   if(cfg.qty < (p.minQty || 1)){
-    toast(`Minimum order is ${p.minQty} ${p.unit==='piece'?'pieces':''}`);
+    toast.warning('Minimum order', `Minimum order is ${p.minQty} ${p.unit==='piece'?'pieces':''}.`);
     return;
   }
-  if(!cfg.date){ toast('Please pick a delivery date'); return; }
+  if(!cfg.date){ toast.warning('Missing date', 'Please pick a delivery date.'); return; }
 
   const r = calculate(cfg);
-  state.cart.push({ ...cfg, snap: r });
+  APP.cart.push({ ...cfg, snap: r });
+  saveLocalCart(APP.cart);
   updateCartUI();
   $('qtyModalBg').classList.remove('show');
-  toast(`${p.name} × ${cfg.qty} added to cart`);
+  toast.success('Added to cart', `${p.name} × ${cfg.qty} added successfully.`);
 };
 
 /* =========================================================
    CART
 ========================================================= */
 function updateCartUI(){
-  $('cartCount').textContent = state.cart.length;
+  $('cartCount').textContent = APP.cart.length;
 
-  if(state.cart.length===0){
+  if(APP.cart.length===0){
     $('drawerBody').innerHTML = `
       <div class="empty-cart">
         <div class="e-ico">🛒</div>
@@ -1066,33 +1442,38 @@ function updateCartUI(){
     return;
   }
 
-  $('drawerBody').innerHTML = state.cart.map((it,i)=>{
+  $('drawerBody').innerHTML = APP.cart.map((it,i)=>{
     const r = it.snap;
+    const ico = r.p.image
+      ? `<img src="${escapeHtml(r.p.image)}" alt="" loading="lazy">`
+      : escapeHtml(r.p.icon || '🧱');
     return `
       <div class="cart-item">
-        <div class="ci-ico" style="background:${r.p.color}22;color:${r.p.color}">${r.p.icon}</div>
+        <div class="ci-ico" style="background:${(r.p.color||'#c2410c')}22;color:${r.p.color||'#c2410c'}">${ico}</div>
         <div class="ci-body">
-          <strong>${r.p.name}</strong>
-          <small>${r.size.label} · ${r.qty} ${r.p.unit==='piece'?'pcs':''}</small>
-          <small>Delivery: ${it.date} · ${r.zone.label}</small>
+          <strong>${escapeHtml(r.p.name)}</strong>
+          <small>${escapeHtml(r.size.label)} · ${r.qty} ${r.p.unit==='piece'?'pcs':''}</small>
+          <small>Delivery: ${escapeHtml(it.date)} · ${escapeHtml(r.zone.label)}</small>
           <a class="ci-remove" data-rm="${i}">Remove</a>
         </div>
         <div class="ci-right">${fmt(r.total)}</div>
       </div>`;
   }).join('');
 
-  const grand = state.cart.reduce((s,it)=> s + it.snap.total, 0);
+  const grand = APP.cart.reduce((s,it)=> s + it.snap.total, 0);
   $('drawerFoot').innerHTML = `
     <div class="cart-total-row"><span>Total (incl. VAT & delivery)</span><b>${fmt(grand)}</b></div>
     <button class="btn btn-primary btn-block" id="checkoutBtn" style="margin-top:10px">
       Checkout with M-Pesa →
     </button>
+    ${APP.online ? '' : `<div style="font-size:11.5px;color:var(--warning);margin-top:8px;text-align:center">⚠️ Offline mode — payments unavailable</div>`}
   `;
   document.querySelectorAll('[data-rm]').forEach(a=>{
     a.onclick = () => {
-      state.cart.splice(+a.dataset.rm,1);
+      APP.cart.splice(+a.dataset.rm,1);
+      saveLocalCart(APP.cart);
       updateCartUI();
-      toast('Item removed');
+      toast.info('Item removed', 'The product has been removed from your cart.');
     };
   });
   $('checkoutBtn').onclick = startCheckout;
@@ -1113,18 +1494,23 @@ $('drawerBg').onclick = () => {
 };
 
 /* =========================================================
-   CHECKOUT — combine cart to single total & open M-Pesa
+   CHECKOUT → M-PESA
 ========================================================= */
 function startCheckout(){
-  if(state.cart.length===0){ toast('Cart is empty'); return; }
-  const grand = state.cart.reduce((s,it)=> s + it.snap.total, 0);
-  state.pending = {
-    items: state.cart.slice(),
-    total: grand,
-  };
+  if(APP.cart.length===0){ toast.warning('Cart empty', 'Add products before checkout.'); return; }
+  if(!APP.online){
+    toast.error(
+      'Cannot checkout',
+      'You are offline. Please reconnect to the store server to make a payment.',
+      6500
+    );
+    return;
+  }
+  const grand = APP.cart.reduce((s,it)=> s + it.snap.total, 0);
+  APP.pending = { items: APP.cart.slice(), total: grand };
   $('drawer').classList.remove('open');
   $('drawerBg').classList.remove('show');
-  openMpesa(state.pending);
+  openMpesa(APP.pending);
 }
 
 /* =========================================================
@@ -1148,12 +1534,12 @@ function openMpesa(order){
         <label>M-Pesa Phone Number <span>(Safaricom)</span></label>
         <div class="phone-wrap">
           <span class="phone-prefix">+254</span>
-          <input type="tel" id="mpesaPhone" placeholder="7XX XXX XXX" maxlength="12" inputmode="numeric" />
+          <input type="tel" id="mpesaPhone" placeholder="7XX XXX XXX" maxlength="12" inputmode="numeric" autocomplete="tel" />
         </div>
         <div class="hint">Enter the number registered on M-Pesa. You'll get an STK push prompt.</div>
       </div>
       <div class="mpesa-info">
-        💡 You will receive a popup on your phone from <b>M-PESA</b>. Enter your PIN to confirm payment of <b>${fmt(order.total)}</b> to <b>${MPESA_ACCOUNT}</b>.
+        💡 You will receive a popup on your phone from <b>M-PESA</b>. Enter your PIN to confirm payment of <b>${fmt(order.total)}</b>.
       </div>
     </div>
     <div class="modal-foot">
@@ -1168,37 +1554,144 @@ function openMpesa(order){
 }
 
 /* =========================================================
-   PROCESS PAYMENT (simulated)
+   PAYMENT — real Daraja flow via backend
 ========================================================= */
-function processPayment(){
-  const phone = ($('mpesaPhone').value || '').replace(/\D/g,'');
-  if(phone.length < 9){ toast('Enter a valid M-Pesa phone number'); return; }
-  const order = state.pending;
+async function processPayment(){
+  const rawPhone = ($('mpesaPhone').value || '').replace(/\D/g,'');
+  if(rawPhone.length < 9){ toast.warning('Invalid phone', 'Enter a valid M-Pesa phone number.'); return; }
 
+  // Normalize to 2547XXXXXXXX
+  let phone = rawPhone;
+  if(phone.startsWith('0')) phone = '254' + phone.slice(1);
+  else if(phone.startsWith('7') || phone.startsWith('1')) phone = '254' + phone;
+  if(!/^254(7|1)\d{8}$/.test(phone)){
+    toast.warning('Invalid phone', 'Please enter a valid Safaricom number (07XX or 01XX).');
+    return;
+  }
+
+  const order = APP.pending;
+  if(!order){ toast.error('Error', 'No pending order.'); return; }
+
+  // Show processing screen
   $('mpesaModalCard').innerHTML = `
     <div class="modal-body">
       <div class="processing">
         <div class="spinner"></div>
-        <p>Sending STK push to +254 ${phone}…</p>
-        <small>Enter your M-Pesa PIN on your phone to confirm.</small>
+        <p id="procTitle">Sending STK push to +${phone}…</p>
+        <small id="procMsg">Enter your M-Pesa PIN on your phone to confirm.</small>
       </div>
     </div>
   `;
 
-  setTimeout(() => {
-    state.paymentRef = 'MPE' + Date.now().toString().slice(-8);
-    showSuccess(order, phone);
-    state.cart = [];
-    state.pending = null;
-    updateCartUI();
-  }, 2600);
+  // 1. Ask backend to send STK push
+  let stkRes;
+  try{
+    stkRes = await api.stkPush({
+      phone,
+      amount: Math.round(order.total),
+      accountRef: 'MARICOPA',
+      description: `Maricopa order · ${order.items.length} item(s)`,
+    });
+  }catch(err){
+    showPaymentError('Payment request failed', 'Could not reach payment server. Please try again.');
+    return;
+  }
+
+  const checkoutRequestId = stkRes?.checkoutRequestId || stkRes?.CheckoutRequestID;
+  if(!checkoutRequestId){
+    showPaymentError('Payment request failed', 'Server did not return a checkout ID. Please try again.');
+    return;
+  }
+
+  $('procTitle').textContent = 'Waiting for PIN confirmation…';
+  $('procMsg').textContent = 'Approve the M-Pesa prompt on your phone.';
+
+  // 2. Poll backend for status
+  let receipt = null;
+  let finalStatus = 'pending';
+  for(let i=0;i<POLL_MAX_ATTEMPTS;i++){
+    await sleep(POLL_INTERVAL_MS);
+    try{
+      const status = await api.stkStatus(checkoutRequestId);
+      const s = (status?.status || '').toLowerCase();
+      if(s === 'success'){
+        receipt = status.mpesaReceipt || status.MpesaReceiptNumber || 'MPESA';
+        finalStatus = 'success';
+        break;
+      }
+      if(s === 'failed' || s === 'cancelled' || s === 'error'){
+        finalStatus = 'failed';
+        break;
+      }
+    }catch(err){
+      // transient error — keep polling
+    }
+  }
+
+  if(finalStatus !== 'success'){
+    showPaymentError(
+      finalStatus === 'failed' ? 'Payment declined' : 'Payment timed out',
+      finalStatus === 'failed'
+        ? 'The M-Pesa transaction was cancelled or declined. Please try again.'
+        : 'We did not receive a confirmation from M-Pesa. Please check your phone and try again.'
+    );
+    return;
+  }
+
+  // 3. Persist order on backend
+  let orderId = 'MAR-' + Date.now().toString().slice(-8);
+  try{
+    const saved = await api.createOrder({
+      items: order.items.map(it=>({
+        productId: it.productId,
+        sizeLabel: it.snap.size.label,
+        qty: it.qty,
+        unitPrice: it.snap.unit,
+        lineTotal: it.snap.total,
+      })),
+      total: Math.round(order.total),
+      phone,
+      mpesaReceipt: receipt,
+      deliveryDate: order.items[0]?.date,
+      deliveryZone: order.items[0]?.snap.zone.id,
+    });
+    if(saved?.orderId) orderId = saved.orderId;
+  }catch(err){
+    // Order persisted failed but payment succeeded — still show success, log internally
+    console.warn('Order persist failed:', err);
+    toast.warning('Order saved locally', 'Payment received. Our team will confirm your order shortly.');
+  }
+
+  APP.paymentRef = receipt;
+  showSuccess(order, phone, orderId, receipt);
+  APP.cart = [];
+  saveLocalCart(APP.cart);
+  APP.pending = null;
+  updateCartUI();
+}
+
+function showPaymentError(title, msg){
+  $('mpesaModalCard').innerHTML = `
+    <div class="modal-body">
+      <div class="success">
+        <div class="s-ico" style="background:rgba(239,68,68,.13);color:var(--danger)">✕</div>
+        <h3>${escapeHtml(title)}</h3>
+        <p>${escapeHtml(msg)}</p>
+        <div style="margin-top:18px">
+          <button class="btn btn-primary btn-block" id="retryPayBtn">Try Again</button>
+        </div>
+      </div>
+    </div>
+  `;
+  $('retryPayBtn').onclick = () => {
+    if(APP.pending) openMpesa(APP.pending);
+  };
 }
 
 /* =========================================================
    SUCCESS
 ========================================================= */
-function showSuccess(order, phone){
-  const orderId = 'MAR-' + Math.floor(100000 + Math.random()*900000);
+function showSuccess(order, phone, orderId, receipt){
   const firstItem = order.items[0];
   const firstDate = firstItem ? firstItem.date : new Date().toISOString().slice(0,10);
 
@@ -1206,7 +1699,7 @@ function showSuccess(order, phone){
     const r = it.snap;
     return `
       <div class="r-row">
-        <span>${r.p.name} · ${r.size.label}</span>
+        <span>${escapeHtml(r.p.name)} · ${escapeHtml(r.size.label)}</span>
         <b>${r.qty} × ${fmt(r.unit)}</b>
       </div>`;
   }).join('');
@@ -1216,13 +1709,13 @@ function showSuccess(order, phone){
       <div class="success">
         <div class="s-ico">✅</div>
         <h3>Payment successful!</h3>
-        <p>Your order has been confirmed. We'll prepare and deliver on <b>${firstDate}</b>.</p>
+        <p>Your order has been confirmed. We'll prepare and deliver on <b>${escapeHtml(firstDate)}</b>.</p>
         <div class="receipt">
-          <div class="r-row"><span>Order ID</span><b>${orderId}</b></div>
+          <div class="r-row"><span>Order ID</span><b>${escapeHtml(orderId)}</b></div>
           ${itemsHtml}
-          <div class="r-row"><span>Delivery date</span><b>${firstDate}</b></div>
-          <div class="r-row"><span>Paid via</span><b>M-Pesa +254 ${phone}</b></div>
-          <div class="r-row"><span>M-Pesa ref</span><b>${state.paymentRef}</b></div>
+          <div class="r-row"><span>Delivery date</span><b>${escapeHtml(firstDate)}</b></div>
+          <div class="r-row"><span>Paid via</span><b>M-Pesa +${escapeHtml(phone)}</b></div>
+          <div class="r-row"><span>M-Pesa ref</span><b>${escapeHtml(receipt)}</b></div>
           <div class="r-row t"><span>Total paid</span><b>${fmt(order.total)}</b></div>
         </div>
         <div style="margin-top:18px">
@@ -1233,7 +1726,7 @@ function showSuccess(order, phone){
   `;
   $('doneBtn').onclick = () => {
     $('mpesaModalBg').classList.remove('show');
-    toast('Order placed successfully 🎉');
+    toast.success('Order placed', 'Thank you for your order! 🎉');
   };
 }
 
@@ -1248,28 +1741,38 @@ document.querySelectorAll('.modal-bg').forEach(m=>{
 });
 
 /* =========================================================
-   LIVE-UPDATE LISTENER
-   If admin changes products in another tab, refresh catalog.
+   LIVE-UPDATE LISTENER (admin changes in another tab)
 ========================================================= */
 window.addEventListener('storage', (e)=>{
   if(e.key === STORAGE_KEY){
-    PRODUCTS = loadProducts();
-    renderCatTabs();
-    renderProducts();
-    toast('Catalog updated');
+    const cached = loadLocalProducts();
+    if(cached){
+      APP.products = cached;
+      renderCatTabs();
+      renderProducts();
+      toast.info('Catalog updated', 'Products have been refreshed.');
+    }
   }
   if(e.key === STORAGE_SETTINGS){
-    SETTINGS = loadSettings();
-    toast('Settings updated');
+    const s = loadLocalSettings();
+    if(s){
+      APP.deliveryZones = s.deliveryZones || APP.deliveryZones;
+      APP.discounts = s.discounts || APP.discounts;
+      APP.vat = typeof s.vat === 'number' ? s.vat : APP.vat;
+      toast.info('Settings updated', 'Prices and fees have been refreshed.');
+    }
   }
 });
 
 /* =========================================================
-   INIT
+   BOOT RETRY BUTTON
 ========================================================= */
-renderCatTabs();
-renderProducts();
-updateCartUI();
+$('bootRetry').onclick = () => boot();
+
+/* =========================================================
+   GO
+========================================================= */
+document.addEventListener('DOMContentLoaded', boot);
 </script>
 </body>
 </html>
